@@ -1,0 +1,71 @@
+.affinity {
+  padding: 4rem 0;
+  background: var(--bg-deep);
+}
+
+.affinity__inner {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.affinity__faces {
+  position: relative;
+}
+
+.affinity__model-badge {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  font-size: 0.85rem;
+  font-weight: 700;
+  z-index: 4;
+}
+
+.affinity__content .avatar-group {
+  margin: 1.75rem 0;
+}
+
+.affinity__testimonials {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.affinity__testimonials li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 255, 135, 0.12);
+}
+
+.affinity__testimonials p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.affinity__testimonials cite {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: normal;
+}
+
+@media (max-width: 900px) {
+  .affinity__inner {
+    grid-template-columns: 1fr;
+  }
+}

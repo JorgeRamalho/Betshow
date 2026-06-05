@@ -1,0 +1,150 @@
+.promos {
+  padding: 5rem 0;
+  background: var(--bg-deep);
+}
+
+.promos__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.promos__header .section-sub {
+  margin-inline: auto;
+}
+
+.promos__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.promos__card {
+  position: relative;
+  padding: 2rem 1.75rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.promos__card:hover {
+  transform: translateY(-6px);
+}
+
+.promos__card--gold:hover {
+  box-shadow: var(--shadow-glow-gold);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.promos__card--green:hover {
+  box-shadow: var(--shadow-glow-green);
+  border-color: rgba(0, 255, 135, 0.4);
+}
+
+.promos__card--cyan:hover {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.25);
+  border-color: rgba(0, 212, 255, 0.4);
+}
+
+.promos__tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 1rem;
+}
+
+.promos__card--gold .promos__tag {
+  background: rgba(255, 215, 0, 0.2);
+  color: var(--gold);
+}
+
+.promos__card--green .promos__tag {
+  background: rgba(0, 255, 135, 0.15);
+  color: var(--neon-green);
+}
+
+.promos__card--cyan .promos__tag {
+  background: rgba(0, 212, 255, 0.15);
+  color: var(--cyan);
+}
+
+.promos__figure {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.promos__card h3 {
+  font-family: var(--font-headline);
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.65rem;
+}
+
+.promos__card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.promos__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
+  transition: gap var(--transition);
+}
+
+.promos__card--gold .promos__cta {
+  color: var(--gold);
+}
+
+.promos__card--green .promos__cta {
+  color: var(--neon-green);
+}
+
+.promos__card--cyan .promos__cta {
+  color: var(--cyan);
+}
+
+.promos__cta:hover {
+  gap: 0.6rem;
+}
+
+.promos__shape {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  bottom: -60px;
+  right: -40px;
+  opacity: 0.15;
+}
+
+.promos__card--gold .promos__shape {
+  background: var(--gold);
+}
+
+.promos__card--green .promos__shape {
+  background: var(--neon-green);
+}
+
+.promos__card--cyan .promos__shape {
+  background: var(--cyan);
+}
+
+@media (max-width: 900px) {
+  .promos__grid {
+    grid-template-columns: 1fr;
+  }
+}

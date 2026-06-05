@@ -1,0 +1,173 @@
+.sports {
+  position: relative;
+  padding: 5rem 0;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.sports__bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: clamp(12rem, 25vw, 22rem);
+  color: rgba(0, 255, 135, 0.03);
+  pointer-events: none;
+  user-select: none;
+}
+
+.sports__header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.sports__header .section-sub {
+  margin-inline: auto;
+}
+
+.sports__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  position: relative;
+}
+
+.sports__card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+}
+
+.sports__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  transition: transform 0.5s ease;
+}
+
+.sports__card--closeup img {
+  object-position: center 15%;
+  transform: scale(1.1);
+}
+
+.sports__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 255, 135, 0.25) 0%,
+    transparent 35%,
+    rgba(5, 8, 16, 0.9) 85%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.sports__card--closeup .sports__gradient {
+  opacity: 1;
+}
+
+.sports__card--closeup.sports__card--gold .sports__gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 215, 0, 0.3) 0%,
+    transparent 40%,
+    rgba(5, 8, 16, 0.92) 88%
+  );
+}
+
+.sports__card:hover img {
+  transform: scale(1.08);
+}
+
+.sports__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  background: linear-gradient(transparent 30%, rgba(5, 8, 16, 0.92));
+}
+
+.sports__card--green .sports__overlay h3 {
+  color: var(--neon-green);
+}
+
+.sports__card--gold .sports__overlay h3 {
+  color: var(--gold);
+}
+
+.sports__card--magenta .sports__overlay h3 {
+  color: var(--magenta-soft);
+}
+
+.sports__card--cyan .sports__overlay h3 {
+  color: var(--cyan);
+}
+
+.sports__overlay h3 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sports__overlay p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.sports__link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.sports__card:hover .sports__link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sports__card--green .sports__link {
+  color: var(--neon-green);
+}
+
+.sports__card--gold .sports__link {
+  color: var(--gold);
+}
+
+.sports__card--magenta .sports__link {
+  color: var(--magenta-soft);
+}
+
+.sports__card--cyan .sports__link {
+  color: var(--cyan);
+}
+
+@media (max-width: 900px) {
+  .sports__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sports__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sports__card {
+    aspect-ratio: 16/10;
+  }
+}

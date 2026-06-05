@@ -1,0 +1,100 @@
+.odds {
+  padding: 4rem 0 5rem;
+  background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+}
+
+.odds__header {
+  margin-bottom: 2rem;
+}
+
+.odds__table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0, 255, 135, 0.15);
+  background: var(--bg-card);
+}
+
+.odds__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.odds__table th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.odds__table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+}
+
+.odds__row--hot {
+  background: rgba(255, 0, 110, 0.05);
+}
+
+.odds__league {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--magenta-soft);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.odds__table strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.odds__table strong span {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.odds__time {
+  font-size: 0.75rem;
+  color: var(--neon-green);
+}
+
+.odds__score {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.05em;
+}
+
+.odds__btn {
+  min-width: 56px;
+  padding: 0.45rem 0.75rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition);
+}
+
+.odds__btn:hover {
+  background: var(--neon-green);
+  color: var(--bg-deep);
+  border-color: var(--neon-green);
+}
+
+.odds__na {
+  color: var(--text-muted);
+}
+
+.odds__bet {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
