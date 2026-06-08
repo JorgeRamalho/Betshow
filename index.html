@@ -4,13 +4,31 @@
     → src/main.tsx (TypeScript + React)
     → src/App.tsx (componentes React)
     → src/styles/global.css + *.css (estilos)
-  Servidor: npm run dev:remote  |  Guia: ACESSO-REMOTO.md
+  Dev (Vite): npm run dev  |  Live Server: botão direito neste index.html → Open with Live Server
+  Antes do Live Server rode: npm run live
 -->
   
 <!DOCTYPE html>  
 <html lang="pt-BR">
   <head>    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script id="live-server-redirect">
+      (function () {
+        var port = location.port;
+        var path = location.pathname;
+        var isVite =
+          port === "5173" || port === "5174" || port === "4173";
+        var isBuilt =
+          path.includes("/dist/") || path.endsWith("/dist");
+        if (
+          !isVite &&
+          !isBuilt &&
+          (location.protocol === "http:" || location.protocol === "https:")
+        ) {
+          location.replace("./dist/index.html");
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -19,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <title>BetShow — Apostas Esportivas Premium</title>

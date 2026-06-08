@@ -1,25 +1,24 @@
+import { Link } from "react-router-dom";
+import Logo from "./brand/Logo";
+import { useAuth } from "../contexts/AuthContext";
 import "./Header.css";
 
 const NAV = [
-  { label: "Esportes", href: "#esportes" },
-  { label: "Embaixadores", href: "#embaixadores" },
-  { label: "Sugestões", href: "#sugestoes-embaixadores" },
-  { label: "Bônus", href: "#bonus" },
-  { label: "Cashback", href: "#cashback" },
-  { label: "Odds ao vivo", href: "#odds" },
-  { label: "Segurança", href: "#cadastro" },
+  { label: "Copa 2026", href: "/#copa2026" },
+  { label: "Esportes", href: "/#esportes" },
+  { label: "Embaixadores", href: "/#embaixadores" },
+  { label: "Sugestões", href: "/#sugestoes-embaixadores" },
+  { label: "Bônus", href: "/#bonus" },
+  { label: "Odds ao vivo", href: "/#odds" },
 ];
 
 export default function Header() {
+  const { isAuthenticated, user, logout } = useAuth();
+
   return (
     <header className="header">
       <div className="header__inner container">
-        <a href="#" className="header__logo" aria-label="BetShow início">
-          <span className="header__logo-mark">BS</span>
-          <span className="header__logo-text">
-            Bet<span>Show</span>
-          </span>
-        </a>
+        <Logo size="md" />
 
         <nav className="header__nav" aria-label="Principal">
           {NAV.map((item) => (
@@ -30,12 +29,28 @@ export default function Header() {
         </nav>
 
         <div className="header__actions">
-          <a href="#cadastro" className="btn btn-outline header__login">
-            Entrar
-          </a>
-          <a href="#cadastro" className="btn btn-primary">
-            Cadastrar CPF
-          </a>
+          {isAuthenticated ? (
+            <>
+              <Link
+                to={user?.role === "admin" ? "/admin" : "/dashboard"}
+                className="btn btn-outline header__login"
+              >
+                {user?.role === "admin" ? "Admin" : "Dashboard"}
+              </Link>
+              <button type="button" className="btn btn-primary" onClick={logout}>
+                Sair
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-outline header__login">
+                Entrar
+              </Link>
+              <Link to="/cadastro" className="btn btn-primary">
+                Cadastrar CPF
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

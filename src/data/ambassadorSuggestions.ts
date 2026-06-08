@@ -10,7 +10,10 @@ export type AmbassadorSuggestion = {
   tier: "A" | "B" | "C";
   fit: string;
   audience: string;
+  /** Avatar circular no corpo do card */
   image: string;
+  /** Rostos/figuras no fundo do bloco (visual superior) */
+  backgroundImage: string;
   /** Referência de mercado (categoria, não contrato) */
   marketRef: string;
 };
@@ -24,7 +27,9 @@ export const FOOTBALL_SUGGESTIONS: AmbassadorSuggestion[] = [
     fit: "Converte torcedor emocionado; ideal para bônus de gol e apostas ao vivo",
     audience: "18–35 · massa Série A e Champions",
     image:
-      "https://images.unsplash.com/photo-1579952363873-27f960b365ec?w=400&q=80&fit=crop&crop=faces",
+      "https://images.unsplash.com/photo-1579952363873-27f960b365ec?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1431324155629-1a6eb1b81ebb?w=600&h=400&fit=crop&crop=faces",
     marketRef: "Estilo: craque com +15M seguidores (ex.: referência Neymar, Gabigol)",
   },
   {
@@ -35,7 +40,9 @@ export const FOOTBALL_SUGGESTIONS: AmbassadorSuggestion[] = [
     fit: "Mensagem de site seguro, CPF verificado e apostas protegidas",
     audience: "25–45 · famílias e apostadores conservadores",
     image:
-      "https://images.unsplash.com/photo-1517466787929-09156a833c36?w=400&q=80&fit=crop&crop=faces",
+      "https://images.unsplash.com/photo-1517466787929-09156a833c36?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&h=400&fit=crop&crop=faces",
     marketRef: "Estilo: referência Alisson, Ederson — credibilidade",
   },
   {
@@ -46,7 +53,9 @@ export const FOOTBALL_SUGGESTIONS: AmbassadorSuggestion[] = [
     fit: "Tom responsável + jogo consciente; bom para compliance GOV",
     audience: "28–50",
     image:
-      "https://images.unsplash.com/photo-1508098682722-e99c43a406a2?w=400&q=80&fit=crop&crop=faces",
+      "https://images.unsplash.com/photo-1508098682722-e99c43a406a2?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1577215205642-2ab98d7b77c6?w=600&h=400&fit=crop&crop=faces",
     marketRef: "Estilo: capitães de seleção e clubes grandes",
   },
   {
@@ -57,7 +66,9 @@ export const FOOTBALL_SUGGESTIONS: AmbassadorSuggestion[] = [
     fit: "Atrai primeiro cadastro e público TikTok/Reels",
     audience: "16–28",
     image:
-      "https://images.unsplash.com/photo-1574623452339-49342a45d1f5?w=400&q=80&fit=crop&crop=faces",
+      "https://images.unsplash.com/photo-1574623452339-49342a45d1f5?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1517927033932-fbf691732d81?w=600&h=400&fit=crop&crop=faces",
     marketRef: "Estilo: joias do Brasileirão e europeus em ascensão",
   },
   {
@@ -68,7 +79,9 @@ export const FOOTBALL_SUGGESTIONS: AmbassadorSuggestion[] = [
     fit: "Autoridade da marca; campanhas TV e YouTube longo",
     audience: "35–60",
     image:
-      "https://images.unsplash.com/photo-1566577731033-469dffedda09?w=400&q=80&fit=crop&crop=faces",
+      "https://images.unsplash.com/photo-1566577731033-469dffedda09?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=400&fit=crop&crop=faces",
     marketRef: "Estilo: ex-Copa do Mundo e Libertadores (Rivaldo, Kaká tier)",
   },
   {
@@ -79,76 +92,35 @@ export const FOOTBALL_SUGGESTIONS: AmbassadorSuggestion[] = [
     fit: "Custo menor; alto ROI em tráfego pago e afiliados",
     audience: "18–34",
     image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80&fit=crop&crop=faces",
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&crop=faces",
     marketRef: "Canais de palpite, podcast esportivo, streamers",
   },
-];
-
-export const BASKETBALL_SUGGESTIONS: AmbassadorSuggestion[] = [
   {
-    id: "ball-nba-star",
-    name: "Perfil: Astro NBA / NBB",
-    profile: "Scorer · highlights e lifestyle",
+    id: "foot-master-league",
+    name: "Perfil: Master League",
+    profile: "Elite internacional · Champions e ligas premium",
     tier: "A",
-    fit: "Empurra odds NBA, live betting e parlay",
-    audience: "18–40 · fã NBA",
+    fit: "Posiciona a BetShow como casa das grandes competições e mercados de elite",
+    audience: "22–45 · torcedores experientes e apostadores de alto ticket",
     image:
-      "https://images.unsplash.com/photo-1627627250823-849683127338?w=400&q=80&fit=crop&crop=faces",
-    marketRef: "Estilo: referência LeBron, Curry; no BR: estrelas NBB",
+      "https://images.unsplash.com/photo-1593341646782-e0b495cff961?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1459866232614-755658eee698?w=600&h=400&fit=crop&crop=faces",
+    marketRef: "Estilo: embaixadores ligados à Champions, Premier League e Libertadores",
   },
   {
-    id: "ball-center",
-    name: "Perfil: Pivot dominante",
-    profile: "Centro · força e presença",
-    tier: "A",
-    fit: "Visual impactante em close-up com degradê dourado",
-    audience: "20–45",
-    image:
-      "https://images.unsplash.com/photo-1504450758481-7338eba2cda0?w=400&q=80&fit=crop&crop=faces",
-    marketRef: "Estilo: pivots All-Star NBB / WNBA parceiras",
-  },
-  {
-    id: "ball-playmaker",
-    name: "Perfil: Armador criativo",
-    profile: "PG · assistências e triple-double",
+    id: "foot-rising-star",
+    name: "Perfil: Rumo ao Estrelato",
+    profile: "Reality esportivo · jornada do aspirante ao profissional",
     tier: "B",
-    fit: "Conecta com apostas em estatísticas de jogador",
-    audience: "18–32",
+    fit: "Narrativa emocional de superação; ideal para séries, bastidores e primeiro cadastro",
+    audience: "16–30 · Gen Z e fãs de reality esportivo",
     image:
-      "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&q=80&fit=crop&crop=faces",
-    marketRef: "Estilo: armadores estilo NBA playmaker",
-  },
-  {
-    id: "ball-street",
-    name: "Perfil: Streetball / 3x3",
-    profile: "Ação urbana · cultura jovem",
-    tier: "B",
-    fit: "Marca jovem, urban, cores vibrantes do site",
-    audience: "16–28",
-    image:
-      "https://images.unsplash.com/photo-1544298960-1926620c4c82?w=400&q=80&fit=crop&crop=faces",
-    marketRef: "Circuitos 3x3, Red Bull, creators streetball BR",
-  },
-  {
-    id: "ball-coach-icon",
-    name: "Perfil: Técnico / comentarista",
-    profile: "Voz tática · credibilidade TV",
-    tier: "B",
-    fit: "Confiança para cashback e regras de bônus",
-    audience: "30–55",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fit=crop&crop=faces",
-    marketRef: "Ex-treinadores e narradores ESPN/Band",
-  },
-  {
-    id: "ball-female",
-    name: "Perfil: Estrela basquete feminino",
-    profile: "LF · diversidade e crescimento",
-    tier: "A",
-    fit: "Amplia base feminina e simpatia da marca",
-    audience: "18–45",
-    image:
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80&fit=crop&crop=faces",
-    marketRef: "Estilo: referência WNBA/NBB feminino em alta",
+      "https://images.unsplash.com/photo-1539571696357-5a1155a69d95?w=120&h=120&fit=crop&crop=face",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=600&h=400&fit=crop&crop=faces",
+    marketRef: "Estilo: formatos documentário, academias, seleções Sub-20 e talent shows",
   },
 ];

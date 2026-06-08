@@ -17,6 +17,19 @@ function getLocalIPv4(): string {
   return "127.0.0.1";
 }
 
+/** Remove redirecionamento do Live Server do build (só vale no index.html da raiz) */
+function stripLiveServerRedirect(): Plugin {
+  return {
+    name: "betshow-strip-live-redirect",
+    transformIndexHtml(html) {
+      return html.replace(
+        /<script id="live-server-redirect">[\s\S]*?<\/script>\s*/g,
+        ""
+      );
+    },
+  };
+}
+
 /** Exibe no terminal o link para celular / outro PC na mesma rede */
 function remoteAccessBanner(mode: "dev" | "preview"): Plugin {
   return {
@@ -42,7 +55,8 @@ function remoteAccessBanner(mode: "dev" | "preview"): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), remoteAccessBanner("dev")],
+  base: "./",
+  plugins: [react(), stripLiveServerRedirect(), remoteAccessBanner("dev")],
   server: {
     host: "0.0.0.0",
     port: PORT,

@@ -4,7 +4,7 @@ import { AMBASSADORS } from "../data/ambassadors";
 import "./Ambassadors.css";
 
 export default function Ambassadors() {
-  const { football, basketball } = AMBASSADORS;
+  const { football } = AMBASSADORS;
 
   return (
     <section className="ambassadors" id="embaixadores" aria-labelledby="amb-title">
@@ -16,12 +16,12 @@ export default function Ambassadors() {
             Ícones que <span>confiam na BetShow</span>
           </h2>
           <p className="section-sub">
-            Close-ups com degradê de marca — os maiores nomes do futebol e do
-            basquete nacional abraçam a plataforma e criam simpatia instantânea.
+            Close-ups com degradê de marca — os maiores nomes do futebol abraçam a
+            plataforma e criam simpatia instantânea.
           </p>
         </header>
 
-        <div className="ambassadors__showcase">
+        <div className="ambassadors__showcase ambassadors__showcase--single">
           <article className="ambassadors__hero-card ambassadors__hero-card--foot">
             <PhotoCloseup
               src={football.imageHero}
@@ -47,38 +47,6 @@ export default function Ambassadors() {
                 <blockquote>“{football.quote}”</blockquote>
                 <a href="#cadastro" className="btn btn-primary">
                   Apostar como {football.name.split(" ")[0]}
-                </a>
-              </div>
-            </PhotoCloseup>
-          </article>
-
-          <article className="ambassadors__hero-card ambassadors__hero-card--ball">
-            <PhotoCloseup
-              src={basketball.imageHero}
-              alt={`${basketball.name} — embaixador de basquete BetShow`}
-              height={520}
-              fades={["right", "bottom"]}
-              tint="gold"
-              ring="gold"
-              className="ambassadors__photo"
-            >
-              <div className="ambassadors__caption ambassadors__caption--right">
-                <span className="ambassadors__sport ambassadors__sport--ball">
-                  🏀 {basketball.sport}
-                </span>
-                <Avatar
-                  src={basketball.image}
-                  alt={basketball.name}
-                  size="lg"
-                  ring="cyan"
-                  className="ambassadors__mini-avatar"
-                />
-                <h3>{basketball.name}</h3>
-                <p className="ambassadors__role">{basketball.role}</p>
-                <p className="ambassadors__tag">{basketball.tagline}</p>
-                <blockquote>“{basketball.quote}”</blockquote>
-                <a href="#cadastro" className="btn btn-gold">
-                  Ver odds NBA
                 </a>
               </div>
             </PhotoCloseup>

@@ -10,16 +10,22 @@
     "preview": "vite preview",
     "preview:remote": "vite preview",
     "serve": "npm run build && vite preview",
-    "start": "powershell -ExecutionPolicy Bypass -File ./scripts/start-remote.ps1"
+    "live": "npm run build",
+    "live:server": "npm run build && live-server . --port=5500 --no-browser --watch=dist,src",
+    "start": "powershell -ExecutionPolicy Bypass -File ./scripts/start-remote.ps1",
+    "tunnel": "npx --yes cloudflared tunnel --url http://localhost:5173",
+    "public": "powershell -ExecutionPolicy Bypass -File ./scripts/start-public.ps1"
   },
   "dependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.17.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "live-server": "^1.2.2",
     "typescript": "~5.7.2",
     "vite": "^6.0.3"
   }

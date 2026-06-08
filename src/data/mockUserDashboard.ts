@@ -1,0 +1,83 @@
+import type { Bet } from "../types/bet";
+import type { UserBetStats } from "../types/bet";
+
+export const MOCK_USER_STATS: UserBetStats = {
+  totalBets: 47,
+  winRate: 58.5,
+  totalStaked: 4250,
+  totalReturns: 4890,
+  profitLoss: 640,
+  activeBets: 3,
+  favoriteSport: "Futebol",
+  copa2026Bets: 12,
+};
+
+export const MOCK_USER_BETS: Bet[] = [
+  {
+    id: "bet-001",
+    userId: "user",
+    userName: "Você",
+    event: "Brasil x Argentina",
+    league: "Copa 2026 · Eliminatórias",
+    market: "Resultado Final",
+    selection: "Brasil",
+    odd: 2.45,
+    stake: 100,
+    potentialReturn: 245,
+    status: "pending",
+    placedAt: "2026-06-08T14:30:00Z",
+  },
+  {
+    id: "bet-002",
+    userId: "user",
+    userName: "Você",
+    event: "Flamengo x Palmeiras",
+    league: "Brasileirão",
+    market: "Ambas Marcam",
+    selection: "Sim",
+    odd: 1.85,
+    stake: 50,
+    potentialReturn: 92.5,
+    status: "won",
+    placedAt: "2026-06-07T20:00:00Z",
+    settledAt: "2026-06-07T22:30:00Z",
+  },
+  {
+    id: "bet-003",
+    userId: "user",
+    userName: "Você",
+    event: "Alemanha x França",
+    league: "Copa 2026",
+    market: "Over 2.5 Gols",
+    selection: "Over",
+    odd: 1.72,
+    stake: 80,
+    potentialReturn: 137.6,
+    status: "lost",
+    placedAt: "2026-06-06T18:00:00Z",
+    settledAt: "2026-06-06T20:15:00Z",
+  },
+  {
+    id: "bet-004",
+    userId: "user",
+    userName: "Você",
+    event: "Portugal x Espanha",
+    league: "Copa 2026",
+    market: "Handicap",
+    selection: "Portugal +1",
+    odd: 2.10,
+    stake: 120,
+    potentialReturn: 252,
+    status: "pending",
+    placedAt: "2026-06-08T10:00:00Z",
+  },
+];
+
+export const MOCK_CHART_DATA = [
+  { label: "Jan", value: 65 },
+  { label: "Fev", value: 80 },
+  { label: "Mar", value: 45 },
+  { label: "Abr", value: 90 },
+  { label: "Mai", value: 70 },
+  { label: "Jun", value: 95 },
+];

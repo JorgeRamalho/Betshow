@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import PhotoCloseup from "./PhotoCloseup";
 import Avatar, { AvatarGroup } from "./Avatar";
 import { AMBASSADORS } from "../data/ambassadors";
@@ -5,7 +6,7 @@ import { COMMUNITY_AVATARS } from "../data/avatars";
 import "./Hero.css";
 
 export default function Hero() {
-  const { football, basketball } = AMBASSADORS;
+  const { football } = AMBASSADORS;
 
   return (
     <section className="hero bg-grid" aria-labelledby="hero-title">
@@ -32,13 +33,12 @@ export default function Hero() {
           </h1>
 
           <p className="hero__desc">
-            Com <strong>{football.name}</strong> e <strong>{basketball.name}</strong>{" "}
-            na BetShow: odds explosivas, cashback e bônus de até{" "}
-            <strong>R$ 500</strong> no 1º depósito.
+            Com <strong>{football.name}</strong> na BetShow: odds explosivas,
+            cashback e bônus de até <strong>R$ 500</strong> no 1º depósito.
           </p>
 
           <div className="hero__ctas">
-            <a href="#cadastro" className="btn btn-primary hero__cta-main">
+            <Link to="/cadastro" className="btn btn-primary hero__cta-main">
               Ganhar bônus agora
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
@@ -48,7 +48,7 @@ export default function Hero() {
                   strokeLinecap="round"
                 />
               </svg>
-            </a>
+            </Link>
             <a href="#embaixadores" className="btn btn-outline">
               Conhecer embaixadores
             </a>
@@ -86,22 +86,6 @@ export default function Hero() {
                   <span>⚽ Embaixador</span>
                   <strong>{football.name}</strong>
                 </div>
-              </div>
-            </PhotoCloseup>
-          </div>
-
-          <div className="hero__ambassador hero__ambassador--ball">
-            <PhotoCloseup
-              src={basketball.imageHero}
-              alt={`${basketball.name} — garoto propaganda basquete`}
-              height={220}
-              fades={["right", "bottom"]}
-              tint="gold"
-              ring="gold"
-            >
-              <div className="hero__amb-label hero__amb-label--compact">
-                <Avatar src={basketball.image} alt={basketball.name} size="sm" ring="cyan" />
-                <strong>{basketball.name}</strong>
               </div>
             </PhotoCloseup>
           </div>

@@ -12,16 +12,4 @@ export const AMBASSADORS = {
     imageHero:
       "https://images.unsplash.com/photo-1593341646782-e0b495cff961?w=1000&q=85&fit=crop&crop=faces",
   },
-  basketball: {
-    name: "Jordan Mendes",
-    role: "Embaixador Basquete BetShow",
-    tagline: "All-Star NBB · MVP Finals 2024",
-    quote:
-      "Odds de NBA ao vivo e bônus justo. Recomendo para quem vive o basquete como eu.",
-    sport: "Basquete",
-    image:
-      "https://images.unsplash.com/photo-1627627250823-849683127338?w=900&q=85&fit=crop&crop=faces",
-    imageHero:
-      "https://images.unsplash.com/photo-1504450758481-7338eba2cda0?w=1000&q=85&fit=crop&crop=faces",
-  },
 } as const;
