@@ -1,7 +1,6 @@
 import Avatar from "./Avatar";
 import {
   FOOTBALL_SUGGESTIONS,
-  BASKETBALL_SUGGESTIONS,
   type AmbassadorSuggestion,
 } from "../data/ambassadorSuggestions";
 import "./AmbassadorSuggestions.css";
@@ -10,7 +9,7 @@ function SuggestionCard({ item }: { item: AmbassadorSuggestion }) {
   return (
     <article className="suggest-card">
       <div className="suggest-card__visual">
-        <img src={item.image} alt="" loading="lazy" />
+        <img src={item.backgroundImage} alt="" loading="lazy" />
         <div className="suggest-card__fade" aria-hidden />
         <span className={`suggest-card__tier suggest-card__tier--${item.tier.toLowerCase()}`}>
           Tier {item.tier}
@@ -73,14 +72,9 @@ export default function AmbassadorSuggestions() {
         </header>
 
         <SuggestionGrid
-          title="Futebol — 6 perfis"
+          title="Futebol — 8 perfis"
           icon="⚽"
           items={FOOTBALL_SUGGESTIONS}
-        />
-        <SuggestionGrid
-          title="Basquete — 6 perfis"
-          icon="🏀"
-          items={BASKETBALL_SUGGESTIONS}
         />
 
         <aside className="suggest__tip">

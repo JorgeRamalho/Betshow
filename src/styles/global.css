@@ -1,54 +1,4 @@
-/* BetShow — Design System: cores vibrantes, tipografia marcante */
-
-:root {
-  /* Fundo & profundidade */
-  --bg-deep: #050810;
-  --bg-primary: #0a0e17;
-  --bg-elevated: #121a2b;
-  --bg-card: #161f35;
-  --bg-glass: rgba(22, 31, 53, 0.72);
-
-  /* Cores de impacto */
-  --neon-green: #00ff87;
-  --neon-green-dim: #00cc6a;
-  --gold: #ffd700;
-  --gold-soft: #ffb800;
-  --magenta: #ff006e;
-  --magenta-soft: #ff4d94;
-  --cyan: #00d4ff;
-  --electric-purple: #8b5cf6;
-  --orange-fire: #ff6b35;
-
-  /* Texto */
-  --text-primary: #f4f7ff;
-  --text-secondary: #a8b4d4;
-  --text-muted: #6b7a9e;
-
-  /* Gradientes */
-  --gradient-hero: linear-gradient(
-    135deg,
-    #0a0e17 0%,
-    #1a1035 40%,
-    #0d2818 100%
-  );
-  --gradient-cta: linear-gradient(135deg, var(--neon-green) 0%, var(--cyan) 100%);
-  --gradient-gold: linear-gradient(135deg, var(--gold) 0%, var(--orange-fire) 100%);
-  --gradient-magenta: linear-gradient(135deg, var(--magenta) 0%, var(--electric-purple) 100%);
-
-  /* Tipografia */
-  --font-display: "Bebas Neue", sans-serif;
-  --font-headline: "Syne", sans-serif;
-  --font-body: "Outfit", sans-serif;
-
-  /* Espaçamento & forma */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
-  --radius-pill: 999px;
-  --shadow-glow-green: 0 0 40px rgba(0, 255, 135, 0.35);
-  --shadow-glow-gold: 0 0 30px rgba(255, 215, 0, 0.3);
-  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* BetShow — estilos globais e utilitários (tokens em tokens.css) */
 
 *,
 *::before,
@@ -102,8 +52,8 @@ ul {
   font-family: var(--font-headline);
   font-size: clamp(2rem, 5vw, 3.25rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .section-title span {

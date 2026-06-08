@@ -68,6 +68,7 @@
 .odds__score {
   font-family: var(--font-display);
   font-size: 1.35rem;
+  font-weight: 700;
   letter-spacing: 0.05em;
 }
 

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="40" fill="#0a0e17"/>
+  <path d="M30 145 L100 35 L170 145 Z" fill="url(#brandGrad)"/>
+  <circle cx="100" cy="125" r="28" fill="#ffd700"/>
+  <path d="M82 118 Q100 98 118 118" stroke="#0a0e17" stroke-width="4" fill="none"/>
+  <text x="100" y="185" text-anchor="middle" fill="#00ff87" font-family="Arial Black,sans-serif" font-size="18" font-weight="800">BETSHOW</text>
+  <defs>
+    <linearGradient id="brandGrad" x1="30" y1="145" x2="170" y2="35">
+      <stop stop-color="#00ff87"/>
+      <stop offset="1" stop-color="#00d4ff"/>
+    </linearGradient>
+  </defs>
+</svg>

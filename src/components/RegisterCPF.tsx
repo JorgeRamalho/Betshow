@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { SUPPORT_AVATAR } from "../data/avatars";
 import "./RegisterCPF.css";
@@ -121,7 +122,7 @@ export default function RegisterCPF() {
 
           {status === "ok" && (
             <p className="register__success" role="status">
-              CPF validado! Em produção, você seria redirecionado ao onboarding.
+              CPF validado! <Link to="/cadastro">Complete seu cadastro</Link> para ativar a conta.
             </p>
           )}
         </form>
