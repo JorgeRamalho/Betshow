@@ -12,19 +12,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
     const fn = isAdmin ? loginAsAdmin : login;
     const ok = await fn(email, password);
+    setIsLoading(false);
+
     if (ok) {
       navigate(isAdmin ? "/admin" : "/dashboard");
     } else {
       setError(
         isAdmin
           ? "Credenciais admin inválidas. Use admin@betshow.com / Admin@2026"
-          : "E-mail ou senha incorretos. Cadastre-se primeiro."
+          : "E-mail ou senha incorretos ou cadastro não confirmado."
       );
     }
   }

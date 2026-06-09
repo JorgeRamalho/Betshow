@@ -4,16 +4,36 @@ import Logo from "../../components/brand/Logo";
 import { useAuth } from "../../contexts/AuthContext";
 import { BRAND } from "../../data/brand";
 import { formatCurrency } from "../../utils/formatters";
+import { apiFetch } from "../../services/api";
 import "../../styles/forms.css";
 
 export default function PaymentPage() {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const navigate = useNavigate();
   const [amount, setAmount] = useState("100");
-  const [done, setDone] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
 
-  function handleDeposit() {
-    setDone(true);
+  async function handleDeposit() {
+    if (!user) return;
+
+    setStatus("loading");
+    setMessage("");
+
+    const result = await apiFetch<{ status: string; amount: number; reference?: string }>("/api/payments/deposit", {
+      method: "POST",
+      body: { amount: Number(amount), method: user.paymentMethod },
+    });
+
+    if (!result.ok) {
+      setStatus("error");
+      setMessage(result.error ?? "Falha ao processar o depósito.");
+      return;
+    }
+
+    updateUser({ balance: user.balance + Number(amount) });
+    setStatus("success");
+    setMessage("Depósito realizado com sucesso. Redirecionando ao dashboard...");
     setTimeout(() => navigate("/dashboard"), 2000);
   }
 
@@ -37,12 +57,18 @@ export default function PaymentPage() {
           <p>Olá, {user.fullName.split(" ")[0]}! Matrícula {user.matricula}</p>
         </div>
 
-        {done ? (
+        {status === "success" ? (
           <div className="form-alert form-alert--success" role="status">
-            Depósito simulado com sucesso! Redirecionando ao dashboard...
+            {message}
           </div>
         ) : (
           <>
+            {status === "error" && (
+              <div className="form-alert form-alert--error" role="alert">
+                {message}
+              </div>
+            )}
+
             <div className="form-alert form-alert--success">
               Bônus de {BRAND.welcomeBonus} creditado! Código {BRAND.promoCode} aplicado.
             </div>
@@ -67,8 +93,8 @@ export default function PaymentPage() {
             </div>
 
             <div className="form-actions">
-              <button type="button" className="btn btn-primary" onClick={handleDeposit}>
-                Confirmar depósito via {user.paymentMethod.toUpperCase()}
+              <button type="button" className="btn btn-primary" onClick={handleDeposit} disabled={status === "loading"}>
+                {status === "loading" ? "Processando..." : `Confirmar depósito via ${user.paymentMethod.toUpperCase()}`}
               </button>
             </div>
           </>

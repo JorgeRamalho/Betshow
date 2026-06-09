@@ -1,17 +1,21 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
-import type { UserProfile } from "../types/user";
+import type { UserProfile, RegisterFormData } from "../types/user";
+import { apiFetch } from "../services/api";
 
 const STORAGE_KEY = "betshow_auth";
 
-type AuthState = {
-  user: UserProfile | null;
-  isAuthenticated: boolean;
+type StoredAuth = {
+  token: string;
+  user: UserProfile;
 };
 
-type AuthContextValue = AuthState & {
+type AuthContextValue = {
+  user: UserProfile | null;
+  isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   loginAsAdmin: (email: string, password: string) => Promise<boolean>;
-  register: (user: UserProfile) => void;
+  register: (form: RegisterFormData) => Promise<boolean>;
+  updateUser: (patch: Partial<UserProfile>) => void;
   logout: () => void;
 };
 
@@ -35,55 +39,101 @@ const DEMO_ADMIN: UserProfile = {
   kycVerified: true,
 };
 
-function loadStoredUser(): UserProfile | null {
+function loadStoredAuth(): StoredAuth | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as UserProfile) : null;
+    return raw ? (JSON.parse(raw) as StoredAuth) : null;
   } catch {
     return null;
   }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<UserProfile | null>(loadStoredUser);
+  const [auth, setAuth] = useState<StoredAuth | null>(loadStoredAuth);
 
-  const persist = useCallback((u: UserProfile | null) => {
-    if (u) localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
-    else localStorage.removeItem(STORAGE_KEY);
-    setUser(u);
+  const persistAuth = useCallback((value: StoredAuth | null) => {
+    if (value) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+    setAuth(value);
   }, []);
 
-  const login = useCallback(async (email: string, password: string) => {
-    const stored = loadStoredUser();
-    if (stored && stored.email === email && password.length >= 6) {
-      persist(stored);
+  const login = useCallback(
+    async (email: string, password: string) => {
+      const result = await apiFetch<{ token: string; user: UserProfile }>("/api/auth/login", {
+        method: "POST",
+        body: { email, password },
+      }, false);
+
+      if (!result.ok || !result.data) {
+        return false;
+      }
+
+      persistAuth(result.data);
       return true;
-    }
-    return false;
-  }, [persist]);
+    },
+    [persistAuth]
+  );
 
   const loginAsAdmin = useCallback(async (email: string, password: string) => {
     if (email === "admin@betshow.com" && password === "Admin@2026") {
-      persist(DEMO_ADMIN);
+      persistAuth({ token: "demo-admin-token", user: DEMO_ADMIN });
       return true;
     }
     return false;
-  }, [persist]);
+  }, [persistAuth]);
 
-  const register = useCallback((newUser: UserProfile) => {
-    persist(newUser);
-  }, [persist]);
+  const register = useCallback(
+    async (form: RegisterFormData) => {
+      const address = `${form.street}, ${form.number}, ${form.city} - ${form.state}, ${form.zip}`;
+      const payload = {
+        fullName: form.fullName,
+        cpf: form.cpf,
+        birthDate: form.birthDate,
+        email: form.email,
+        phone: form.phone,
+        address,
+        paymentMethod: form.paymentMethod,
+        password: form.password,
+      };
 
-  const logout = useCallback(() => persist(null), [persist]);
+      const result = await apiFetch<{ token: string; user: UserProfile }>("/api/auth/register", {
+        method: "POST",
+        body: payload,
+      }, false);
+
+      if (!result.ok || !result.data) {
+        return false;
+      }
+
+      persistAuth(result.data);
+      return true;
+    },
+    [persistAuth]
+  );
+
+  const updateUser = useCallback(
+    (patch: Partial<UserProfile>) => {
+      if (!auth) return;
+      const updated = { token: auth.token, user: { ...auth.user, ...patch } };
+      persistAuth(updated);
+    },
+    [auth, persistAuth]
+  );
+
+  const logout = useCallback(() => persistAuth(null), [persistAuth]);
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        isAuthenticated: !!user,
+        user: auth?.user ?? null,
+        isAuthenticated: !!auth,
         login,
         loginAsAdmin,
         register,
+        updateUser,
         logout,
       }}
     >
