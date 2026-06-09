@@ -14,7 +14,9 @@
     "live:server": "npm run build && live-server . --port=5500 --no-browser --watch=dist,src",
     "start": "powershell -ExecutionPolicy Bypass -File ./scripts/start-remote.ps1",
     "tunnel": "npx --yes cloudflared tunnel --url http://localhost:5173",
-    "public": "powershell -ExecutionPolicy Bypass -File ./scripts/start-public.ps1"
+    "public": "powershell -ExecutionPolicy Bypass -File ./scripts/start-public.ps1",
+    "backend:dev": "cd backend && npm run dev",
+    "backend:build": "cd backend && npm run build"
   },
   "dependencies": {
     "react": "^19.0.0",

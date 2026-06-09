@@ -19,6 +19,7 @@ Projeto-Betshow/
 ├── package.json            ← Scripts npm
 ├── ACESSO-REMOTO.md        ← Links para celular e internet
 └── dist/                   ← Gerado por npm run build (HTML+JS+CSS prontos)
+└── backend/                ← API Node.js + Express, PostgreSQL, JWT, pagamentos e notificações
 ```
 
 ## Fluxo no navegador

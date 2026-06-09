@@ -1,4 +1,6 @@
-# BetShow — Apostas Esportivas
+# 🎯 BetShow - Plataforma de Apostas Esportivas
+
+**Betshow** é uma plataforma moderna de apostas esportivas com foco na Copa do Mundo 2026, desenvolvida com React, TypeScript e Vite. — Apostas Esportivas
 
 Landing page em **HTML + CSS + TypeScript + React**, com servidor configurado para **acesso remoto** na rede local.
 
@@ -57,6 +59,29 @@ Ver **[docs/ESTRUTURA-ARQUIVOS.md](./docs/ESTRUTURA-ARQUIVOS.md)** — `index.ht
 | `npm run build` | Gera pasta `dist/` |
 | `npm run preview:remote` | Preview da build na rede |
 | `npm run serve` | Build + preview |
+| `npm run backend:dev` | Inicia o backend Express local em `backend/` |
+| `npm run backend:build` | Verifica o backend TypeScript |
+
+## Backend para produção
+
+A estrutura de backend está em `backend/` e foi criada para suportar:
+- API REST em Node.js + Express
+- Banco de dados PostgreSQL
+- Autenticação JWT segura
+- Integração com Stripe para pagamentos
+- Esquema de e-mail (nodemailer) e SMS (Twilio) para notificações
+
+Use `backend/.env.example` como referência de variáveis de ambiente.
+
+## Frontend e API local
+
+Configure a URL do backend no frontend com um arquivo `.env` na raiz do projeto:
+
+```env
+VITE_API_URL=http://localhost:4000
+```
+
+Se preferir, copie também `.env.example` e ajuste o valor.
 
 ## Aviso legal
 

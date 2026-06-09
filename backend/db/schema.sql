@@ -1,0 +1,44 @@
+-- BetShow database schema
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  matricula VARCHAR(32) UNIQUE NOT NULL,
+  full_name VARCHAR(128) NOT NULL,
+  cpf VARCHAR(20) UNIQUE NOT NULL,
+  birth_date DATE NOT NULL,
+  email VARCHAR(128) UNIQUE NOT NULL,
+  phone VARCHAR(32) NOT NULL,
+  address TEXT NOT NULL,
+  payment_method VARCHAR(32) NOT NULL,
+  role VARCHAR(32) NOT NULL DEFAULT 'user',
+  password_hash TEXT NOT NULL,
+  balance NUMERIC(12,2) NOT NULL DEFAULT 0,
+  bonus_balance NUMERIC(12,2) NOT NULL DEFAULT 0,
+  cashback_earned NUMERIC(12,2) NOT NULL DEFAULT 0,
+  kyc_verified BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  type VARCHAR(32) NOT NULL,
+  amount NUMERIC(12,2) NOT NULL,
+  status VARCHAR(32) NOT NULL,
+  method VARCHAR(64) NOT NULL,
+  description TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS bets (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  event_name VARCHAR(128) NOT NULL,
+  market VARCHAR(64) NOT NULL,
+  selection VARCHAR(128) NOT NULL,
+  odd NUMERIC(8,3) NOT NULL,
+  stake NUMERIC(12,2) NOT NULL,
+  potential_return NUMERIC(12,2) NOT NULL,
+  status VARCHAR(32) NOT NULL DEFAULT 'pending',
+  placed_at TIMESTAMP NOT NULL DEFAULT NOW()
+);

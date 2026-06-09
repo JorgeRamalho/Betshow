@@ -1,0 +1,72 @@
+.info-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  transition: all var(--transition);
+}
+
+.info-card:hover {
+  border-color: rgba(0, 255, 135, 0.3);
+  background: var(--bg-elevated);
+}
+
+.info-card__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  min-width: 2rem;
+}
+
+.info-card__content {
+  flex: 1;
+}
+
+.info-card__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.info-card__value {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+.info-card__subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.info-card--green .info-card__value {
+  color: var(--neon-green);
+}
+
+.info-card--gold .info-card__value {
+  color: var(--gold);
+}
+
+.info-card--red .info-card__value {
+  color: var(--danger);
+}
+
+.info-card--blue .info-card__value {
+  color: var(--cyan);
+}
+
+.info-card[role="button"] {
+  cursor: pointer;
+}
+
+.info-card[role="button"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}

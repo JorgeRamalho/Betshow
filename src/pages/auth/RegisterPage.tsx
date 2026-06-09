@@ -27,6 +27,8 @@ export default function RegisterPage() {
     matricula: generateMatricula(),
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function update(field: keyof RegisterFormData, value: string | boolean) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -66,31 +68,19 @@ export default function RegisterPage() {
     else submit();
   }
 
-  function submit() {
-    register({
-      id: `user-${Date.now()}`,
-      matricula: form.matricula,
-      fullName: form.fullName,
-      cpf: form.cpf,
-      birthDate: form.birthDate,
-      email: form.email,
-      phone: form.phone,
-      address: {
-        street: form.street,
-        number: form.number,
-        city: form.city,
-        state: form.state,
-        zip: form.zip,
-      },
-      paymentMethod: form.paymentMethod,
-      role: "user",
-      balance: 0,
-      bonusBalance: 500,
-      cashbackEarned: 0,
-      createdAt: new Date().toISOString(),
-      kycVerified: false,
-    });
-    navigate("/pagamento");
+  async function submit() {
+    setSubmitError("");
+    setIsSubmitting(true);
+
+    const success = await register(form);
+    setIsSubmitting(false);
+
+    if (success) {
+      navigate("/pagamento");
+      return;
+    }
+
+    setSubmitError("Falha ao registrar. Verifique seus dados e tente novamente.");
   }
 
   return (
@@ -268,13 +258,15 @@ export default function RegisterPage() {
           </>
         )}
 
+        {submitError && <div className="form-alert form-alert--error" role="alert">{submitError}</div>}
+
         <div className="form-actions">
           {step > 0 && (
             <button type="button" className="btn btn-outline" onClick={() => setStep(step - 1)}>
               Voltar
             </button>
           )}
-          <button type="button" className="btn btn-primary" onClick={next}>
+          <button type="button" className="btn btn-primary" onClick={next} disabled={isSubmitting}>
             {step === STEPS.length - 1 ? "Confirmar cadastro" : "Continuar"}
           </button>
         </div>
