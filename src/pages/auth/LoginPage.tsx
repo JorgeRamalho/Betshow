@@ -78,8 +78,8 @@ export default function LoginPage() {
         </label>
 
         <div className="form-actions">
-          <button type="submit" className="btn btn-primary">
-            Entrar
+          <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            {isLoading ? "Entrando..." : "Entrar"}
           </button>
         </div>
 

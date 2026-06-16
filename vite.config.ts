@@ -22,10 +22,26 @@ function stripLiveServerRedirect(): Plugin {
   return {
     name: "betshow-strip-live-redirect",
     transformIndexHtml(html) {
-      return html.replace(
+      const withoutRedirect = html.replace(
         /<script id="live-server-redirect">[\s\S]*?<\/script>\s*/g,
         ""
       );
+
+      const fileProtocolGuard = `<script>
+if (location.protocol === "file:") {
+  document.addEventListener("DOMContentLoaded", function () {
+    document.body.innerHTML =
+      '<div style="font-family:sans-serif;max-width:520px;margin:3rem auto;padding:1.5rem;line-height:1.6">' +
+      "<h1>BetShow</h1><p>Abra com um servidor local — não use duplo clique no arquivo.</p>" +
+      "<p><strong>Live Server:</strong> rode <code>npm run live:server</code> e acesse " +
+      '<a href="http://127.0.0.1:5500/">http://127.0.0.1:5500/</a></p>' +
+      "<p><strong>Desenvolvimento:</strong> <code>npm run dev</code> → " +
+      '<a href="http://localhost:5173/">http://localhost:5173/</a></p></div>';
+  });
+}
+</script>`;
+
+      return withoutRedirect.replace("</head>", `    ${fileProtocolGuard}\n  </head>`);
     },
   };
 }

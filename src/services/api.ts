@@ -25,7 +25,15 @@ export function storeAuth(payload: { token: string; user: any } | null) {
   }
 }
 
-export async function apiFetch<T>(path: string, options: RequestInit = {}, includeAuth = true): Promise<ApiResult<T>> {
+type ApiFetchOptions = Omit<RequestInit, "body"> & {
+  body?: unknown;
+};
+
+export async function apiFetch<T>(
+  path: string,
+  options: ApiFetchOptions = {},
+  includeAuth = true
+): Promise<ApiResult<T>> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...(options.headers as Record<string, string>),

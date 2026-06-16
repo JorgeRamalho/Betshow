@@ -13,18 +13,29 @@
   <head>    <meta charset="UTF-8" />
     <script id="live-server-redirect">
       (function () {
+        if (location.protocol === "file:") {
+          document.addEventListener("DOMContentLoaded", function () {
+            document.body.innerHTML =
+              '<div style="font-family:sans-serif;max-width:520px;margin:3rem auto;padding:1.5rem;line-height:1.6">' +
+              "<h1>BetShow</h1><p>Abra com um servidor local — não use duplo clique no arquivo.</p>" +
+              "<p><strong>Live Server:</strong> rode <code>npm run live:server</code> e acesse " +
+              "<a href=\"http://127.0.0.1:5500/\">http://127.0.0.1:5500/</a></p>" +
+              "<p><strong>Desenvolvimento:</strong> <code>npm run dev</code> → " +
+              "<a href=\"http://localhost:5173/\">http://localhost:5173/</a></p></div>";
+          });
+          return;
+        }
+
         var port = location.port;
         var path = location.pathname;
-        var isVite =
-          port === "5173" || port === "5174" || port === "4173";
-        var isBuilt =
-          path.includes("/dist/") || path.endsWith("/dist");
-        if (
-          !isVite &&
-          !isBuilt &&
-          (location.protocol === "http:" || location.protocol === "https:")
-        ) {
-          location.replace("./dist/index.html");
+        var isVite = port === "5173" || port === "5174" || port === "4173";
+        var isBuilt = path.includes("/dist/") || path.endsWith("/dist");
+        var isLiveServer = port === "5500";
+
+        if (isVite || isBuilt || isLiveServer) return;
+
+        if (location.protocol === "http:" || location.protocol === "https:") {
+          location.replace("./dist/");
         }
       })();
     </script>

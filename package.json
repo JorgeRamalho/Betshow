@@ -11,7 +11,7 @@
     "preview:remote": "vite preview",
     "serve": "npm run build && vite preview",
     "live": "npm run build",
-    "live:server": "npm run build && live-server . --port=5500 --no-browser --watch=dist,src",
+    "live:server": "npm run build && live-server dist --port=5500 --host=127.0.0.1 --no-browser --entry-file=index.html --watch=dist",
     "start": "powershell -ExecutionPolicy Bypass -File ./scripts/start-remote.ps1",
     "tunnel": "npx --yes cloudflared tunnel --url http://localhost:5173",
     "public": "powershell -ExecutionPolicy Bypass -File ./scripts/start-public.ps1",
