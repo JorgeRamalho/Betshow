@@ -49,8 +49,8 @@ export default function Hero() {
                 />
               </svg>
             </Link>
-            <a href="#embaixadores" className="btn btn-outline">
-              Conhecer embaixadores
+            <a href="#odds" className="btn btn-outline">
+              Ver odds ao vivo
             </a>
           </div>
 

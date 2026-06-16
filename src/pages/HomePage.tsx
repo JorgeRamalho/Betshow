@@ -3,7 +3,6 @@ import Hero from "../components/Hero";
 import TrustBar from "../components/TrustBar";
 import PromoCards from "../components/PromoCards";
 import Copa2026Banner from "../components/Copa2026Banner";
-import Ambassadors from "../components/Ambassadors";
 import CommunityAffinity from "../components/CommunityAffinity";
 import SportsArena from "../components/SportsArena";
 import FamilyClub from "../components/FamilyClub";
@@ -20,7 +19,6 @@ export default function HomePage() {
         <Copa2026Banner />
         <TrustBar />
         <PromoCards />
-        <Ambassadors />
         <LiveOdds />
         <CommunityAffinity />
         <SportsArena />
