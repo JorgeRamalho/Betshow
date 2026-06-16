@@ -1,4 +1,4 @@
-📌 # Betshow - mPaixão pelo jogo e vira vitória 
+📌 ## Betshow - Paixão pelo jogo quee vira vitória 
 
 🌐 ## Website Link do projeto online: https://www.betshow-six.vercel.app/
 
