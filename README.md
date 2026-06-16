@@ -1,6 +1,6 @@
 📌 ## Betshow - Paixão pelo jogo quee vira vitória 
 
-🌐 ## Website Link do projeto online: https://www.betshow-six.vercel.app/
+🌐 ## Website Link do projeto online: https://betshow.netlify.app/
 
 📂 ## Repositório: https://github.com//JorgeRamalho/Betshow
 
