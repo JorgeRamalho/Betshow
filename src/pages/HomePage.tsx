@@ -4,7 +4,6 @@ import TrustBar from "../components/TrustBar";
 import PromoCards from "../components/PromoCards";
 import Copa2026Banner from "../components/Copa2026Banner";
 import Ambassadors from "../components/Ambassadors";
-import AmbassadorSuggestions from "../components/AmbassadorSuggestions";
 import CommunityAffinity from "../components/CommunityAffinity";
 import SportsArena from "../components/SportsArena";
 import FamilyClub from "../components/FamilyClub";
@@ -22,7 +21,6 @@ export default function HomePage() {
         <TrustBar />
         <PromoCards />
         <Ambassadors />
-        <AmbassadorSuggestions />
         <LiveOdds />
         <CommunityAffinity />
         <SportsArena />

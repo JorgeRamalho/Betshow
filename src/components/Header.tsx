@@ -7,7 +7,6 @@ const NAV = [
   { label: "Copa 2026", href: "/#copa2026" },
   { label: "Esportes", href: "/#esportes" },
   { label: "Embaixadores", href: "/#embaixadores" },
-  { label: "Sugestões", href: "/#sugestoes-embaixadores" },
   { label: "Bônus", href: "/#bonus" },
   { label: "Odds ao vivo", href: "/#odds" },
 ];
