@@ -33,8 +33,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Base relativa: funciona em /Betshow/ (Pages) e na raiz (Netlify)
-          VITE_BASE: ./
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
       - name: SPA fallback (rotas React)
         run: cp dist/index.html dist/404.html

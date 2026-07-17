@@ -4,13 +4,13 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import paymentRoutes from "./routes/payments.js";
 import betRoutes from "./routes/bets.js";
-import { FRONTEND_URL } from "./config.js";
+import { FRONTEND_ORIGINS } from "./config.js";
 
 const app = express();
 
 app.use(
   cors({
-    origin: [FRONTEND_URL, "http://localhost:5173"],
+    origin: FRONTEND_ORIGINS,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
