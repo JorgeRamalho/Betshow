@@ -43,11 +43,19 @@ function QuoteCard({ item }: { item: MarketQuote }) {
   );
 }
 
+function formatTodayLabel(date = new Date()) {
+  return date.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
+
 export default function MarketStatusBar() {
   const [items, setItems] = useState<MarketQuote[]>([]);
-  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [todayLabel, setTodayLabel] = useState(() => formatTodayLabel());
 
   useEffect(() => {
     let alive = true;
@@ -57,10 +65,11 @@ export default function MarketStatusBar() {
         const data = await loadMarkets();
         if (!alive) return;
         setItems(data.items);
-        setUpdatedAt(data.updatedAt);
+        setTodayLabel(formatTodayLabel());
         setError("");
       } catch {
         if (!alive) return;
+        setTodayLabel(formatTodayLabel());
         setError("Cotações indisponíveis no momento");
       } finally {
         if (alive) setLoading(false);
@@ -78,6 +87,11 @@ export default function MarketStatusBar() {
   const track = (items.length ? items : placeholderItems).filter(Boolean);
   // Duplica o grupo para loop contínuo sem “salto”
   const loopItems = [...track, ...track, ...track];
+  const statusLine = loading
+    ? "Atualizando cotações…"
+    : error
+      ? error
+      : `Ao vivo · ${todayLabel} · 24hrs`;
 
   return (
     <section className="market-status" aria-label="Barra de status de mercados">
@@ -86,18 +100,7 @@ export default function MarketStatusBar() {
           <span className="market-status__live" aria-hidden />
           <div>
             <strong>Mercados agora</strong>
-            <small>
-              {loading
-                ? "Atualizando cotações…"
-                : error
-                  ? error
-                  : updatedAt
-                    ? `Ao vivo · ${new Date(updatedAt).toLocaleTimeString("pt-BR", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}`
-                    : "Cotações ao vivo"}
-            </small>
+            <small>{statusLine}</small>
           </div>
         </div>
 
