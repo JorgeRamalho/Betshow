@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { useAuth } from "../../contexts/AuthContext";
 import {
@@ -18,7 +18,6 @@ const ADMIN_LINKS = [
   { to: "/admin", label: "Financeiro", icon: "💼" },
   { to: "/admin/apostas", label: "Apostas", icon: "🎯" },
   { to: "/admin/usuarios", label: "Usuários", icon: "👥" },
-  { to: "/", label: "Site", icon: "🏠" },
 ];
 
 const EMPTY_FIN: FinancialSummary = {
@@ -101,6 +100,9 @@ export default function AdminDashboardPage() {
             Gestão financeira · Apostas · Usuários · {user.fullName}
           </p>
         </div>
+        <Link to="/" className="btn btn-outline">
+          ← Voltar à home
+        </Link>
       </header>
 
       {error && (

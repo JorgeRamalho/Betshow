@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { useAuth } from "../../contexts/AuthContext";
 import { BRAND } from "../../data/brand";
@@ -13,7 +13,6 @@ const USER_LINKS = [
   { to: "/dashboard", label: "Visão geral", icon: "📊" },
   { to: "/dashboard/apostas", label: "Minhas apostas", icon: "🎯" },
   { to: "/pagamento", label: "Depositar", icon: "💰" },
-  { to: "/", label: "Site", icon: "🏠" },
 ];
 
 const EMPTY_STATS: UserBetStats = {
@@ -94,9 +93,9 @@ export default function UserDashboardPage() {
             {stats.copa2026Bets} apostas na Copa · Cashback {BRAND.cashbackRate}
           </p>
         </div>
-        <a href="/#copa2026" className="btn btn-gold">
+        <Link to={{ pathname: "/", hash: "copa2026" }} className="btn btn-gold">
           Ver mercados Copa
-        </a>
+        </Link>
       </div>
 
       <header className="dashboard-header">
@@ -106,11 +105,16 @@ export default function UserDashboardPage() {
             Matrícula {user.matricula} · {user.email}
           </p>
         </div>
-        <div style={{ textAlign: "right" }}>
-          <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>Saldo disponível</p>
-          <p style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--neon-green)" }}>
-            {formatCurrency(user.balance + user.bonusBalance)}
-          </p>
+        <div className="dashboard-header__actions">
+          <Link to="/" className="btn btn-outline">
+            ← Voltar à home
+          </Link>
+          <div style={{ textAlign: "right" }}>
+            <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>Saldo disponível</p>
+            <p style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--neon-green)" }}>
+              {formatCurrency(user.balance + user.bonusBalance)}
+            </p>
+          </div>
         </div>
       </header>
 

@@ -22,6 +22,9 @@ export default function DashboardLayout({ children, variant, links }: DashboardL
         <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.5rem" }}>
           {variant === "admin" ? "Painel Admin" : "Minha conta"}
         </p>
+        <Link to="/" className="btn btn-outline dashboard-sidebar__home">
+          ← Voltar à home
+        </Link>
         <nav className="dashboard-sidebar__nav" aria-label={variant === "admin" ? "Admin" : "Usuário"}>
           {links.map((l) => (
             <Link
