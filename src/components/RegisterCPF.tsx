@@ -2,43 +2,40 @@ import { useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { SUPPORT_AVATAR } from "../data/avatars";
+import { formatCPF, isValidCPF, isAdult } from "../utils/validators";
 import "./RegisterCPF.css";
 
-function formatCPF(value: string): string {
-  const digits = value.replace(/\D/g, "").slice(0, 11);
-  return digits
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-}
-
-function isValidCPF(cpf: string): boolean {
-  const digits = cpf.replace(/\D/g, "");
-  if (digits.length !== 11 || /^(\d)\1+$/.test(digits)) return false;
-  let sum = 0;
-  for (let i = 0; i < 9; i++) sum += parseInt(digits[i], 10) * (10 - i);
-  let rest = (sum * 10) % 11;
-  if (rest === 10 || rest === 11) rest = 0;
-  if (rest !== parseInt(digits[9], 10)) return false;
-  sum = 0;
-  for (let i = 0; i < 10; i++) sum += parseInt(digits[i], 10) * (11 - i);
-  rest = (sum * 10) % 11;
-  if (rest === 10 || rest === 11) rest = 0;
-  return rest === parseInt(digits[10], 10);
-}
+type FormStatus = "idle" | "ok" | "cpf-error" | "birth-error" | "underage";
 
 export default function RegisterCPF() {
   const [cpf, setCpf] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "ok" | "error">("idle");
+  const [status, setStatus] = useState<FormStatus>("idle");
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
     if (!isValidCPF(cpf)) {
-      setStatus("error");
+      setStatus("cpf-error");
       return;
     }
+
+    if (!birthDate) {
+      setStatus("birth-error");
+      return;
+    }
+
+    if (!isAdult(birthDate)) {
+      setStatus("underage");
+      return;
+    }
+
     setStatus("ok");
+  }
+
+  function clearStatus() {
+    setStatus("idle");
   }
 
   return (
@@ -77,6 +74,11 @@ export default function RegisterCPF() {
             </div>
           </div>
 
+          <div className="register__age-alert" role="note">
+            <strong>Atenção:</strong> o cadastro é exclusivo para pessoas maiores
+            de idade (18 anos ou mais), conforme a legislação brasileira.
+          </div>
+
           <label htmlFor="cpf">CPF</label>
           <input
             id="cpf"
@@ -86,15 +88,43 @@ export default function RegisterCPF() {
             value={cpf}
             onChange={(e) => {
               setCpf(formatCPF(e.target.value));
-              setStatus("idle");
+              clearStatus();
             }}
-            aria-invalid={status === "error"}
-            aria-describedby={status === "error" ? "cpf-error" : undefined}
+            aria-invalid={status === "cpf-error"}
+            aria-describedby={status === "cpf-error" ? "cpf-error" : undefined}
             required
           />
-          {status === "error" && (
+          {status === "cpf-error" && (
             <p id="cpf-error" className="register__error" role="alert">
               CPF inválido. Verifique os números digitados.
+            </p>
+          )}
+
+          <label htmlFor="birthDate">Data de nascimento</label>
+          <input
+            id="birthDate"
+            type="date"
+            value={birthDate}
+            max={new Date().toISOString().slice(0, 10)}
+            onChange={(e) => {
+              setBirthDate(e.target.value);
+              clearStatus();
+            }}
+            aria-invalid={status === "birth-error" || status === "underage"}
+            aria-describedby="birthDate-hint birthDate-error"
+            required
+          />
+          <p id="birthDate-hint" className="register__hint">
+            É necessário ter 18 anos ou mais para criar uma conta.
+          </p>
+          {status === "birth-error" && (
+            <p id="birthDate-error" className="register__error" role="alert">
+              Informe sua data de nascimento.
+            </p>
+          )}
+          {status === "underage" && (
+            <p id="birthDate-error" className="register__error" role="alert">
+              Cadastro permitido apenas para maiores de 18 anos.
             </p>
           )}
 

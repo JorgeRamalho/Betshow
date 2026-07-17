@@ -1,12 +1,66 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PhotoCloseup from "./PhotoCloseup";
-import Avatar, { AvatarGroup } from "./Avatar";
+import { AvatarGroup } from "./Avatar";
 import { AMBASSADORS } from "../data/ambassadors";
 import { COMMUNITY_AVATARS } from "../data/avatars";
 import "./Hero.css";
 
+const HERO_SPORTS = [
+  {
+    label: "Futebol",
+    src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=900&q=80&fit=crop",
+  },
+  {
+    label: "Basquete",
+    src: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=900&q=80&fit=crop",
+  },
+  {
+    label: "Tênis",
+    src: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=900&q=80&fit=crop",
+  },
+  {
+    label: "MMA",
+    src: "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=900&q=80&fit=crop",
+  },
+  {
+    label: "E-Sports",
+    src: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&q=80&fit=crop",
+  },
+  {
+    label: "Automobilismo",
+    src: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=900&q=80&fit=crop",
+  },
+  {
+    label: "Vôlei",
+    src: "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=900&q=80&fit=crop",
+  },
+  {
+    label: "Estádio",
+    src: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=900&q=80&fit=crop",
+  },
+  {
+    label: "Bola em jogo",
+    src: "https://images.unsplash.com/photo-1575361204480-aadea25e6e68?w=900&q=80&fit=crop",
+  },
+  {
+    label: "Natação",
+    src: "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=900&q=80&fit=crop",
+  },
+] as const;
+
+const CAROUSEL_INTERVAL_MS = 4000;
+
 export default function Hero() {
   const { football } = AMBASSADORS;
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % HERO_SPORTS.length);
+    }, CAROUSEL_INTERVAL_MS);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <section className="hero bg-grid" aria-labelledby="hero-title">
@@ -71,28 +125,48 @@ export default function Hero() {
         </div>
 
         <div className="hero__visual">
-          <div className="hero__ambassador hero__ambassador--foot">
-            <PhotoCloseup
-              src={football.imageHero}
-              alt={`${football.name} — garoto propaganda futebol`}
-              height={400}
-              fades={["left", "bottom"]}
-              tint="green"
-              ring="cta"
-            >
-              <div className="hero__amb-label">
-                <Avatar src={football.image} alt={football.name} size="md" ring="gold" />
-                <div>
-                  <span>⚽ Embaixador</span>
-                  <strong>{football.name}</strong>
-                </div>
-              </div>
-            </PhotoCloseup>
+          <div
+            className="hero__carousel"
+            role="region"
+            aria-roledescription="carrossel"
+            aria-label="Imagens de esportes"
+          >
+            <div className="hero__carousel-frame">
+              {HERO_SPORTS.map((sport, index) => (
+                <figure
+                  key={sport.label}
+                  className={`hero__carousel-slide${
+                    index === activeSlide ? " hero__carousel-slide--active" : ""
+                  }`}
+                  aria-hidden={index !== activeSlide}
+                >
+                  <img src={sport.src} alt="" />
+                  <figcaption className="hero__carousel-label">{sport.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className="hero__carousel-dots" role="tablist" aria-label="Slides do carrossel">
+              {HERO_SPORTS.map((sport, index) => (
+                <button
+                  key={sport.label}
+                  type="button"
+                  role="tab"
+                  aria-selected={index === activeSlide}
+                  aria-label={`Ver ${sport.label}`}
+                  className={`hero__carousel-dot${
+                    index === activeSlide ? " hero__carousel-dot--active" : ""
+                  }`}
+                  onClick={() => setActiveSlide(index)}
+                />
+              ))}
+            </div>
           </div>
 
           <div className="hero__card hero__card--live">
             <span className="hero__live">AO VIVO</span>
-            <p>Brasileirão · Flamengo x Palmeiras</p>
+            <p className="hero__match-league">Brasileirão</p>
+            <p className="hero__match-teams">Flamengo x Palmeiras</p>
             <div className="hero__odds">
               <button type="button">1 · 2.10</button>
               <button type="button" className="active">
@@ -109,17 +183,6 @@ export default function Hero() {
               <small>bônus boas-vindas</small>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="hero__ticker" aria-hidden>
-        <div className="hero__ticker-track">
-          {[...Array(2)].map((_, i) => (
-            <span key={i}>
-              FUTEBOL · BASQUETE · MMA · TÊNIS · E-SPORTS · VÔLEI · F1 ·
-              COPA · CHAMPIONS · NBA · UFC ·
-            </span>
-          ))}
         </div>
       </div>
     </section>

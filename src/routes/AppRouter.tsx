@@ -5,6 +5,8 @@ import RegisterPage from "../pages/auth/RegisterPage";
 import PaymentPage from "../pages/payment/PaymentPage";
 import UserDashboardPage from "../pages/user/UserDashboardPage";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
+import PrivacyPolicyPage from "../pages/legal/PrivacyPolicyPage";
+import CookiesPolicyPage from "../pages/legal/CookiesPolicyPage";
 
 export default function AppRouter() {
   return (
@@ -13,6 +15,8 @@ export default function AppRouter() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/cadastro" element={<RegisterPage />} />
       <Route path="/pagamento" element={<PaymentPage />} />
+      <Route path="/privacidade" element={<PrivacyPolicyPage />} />
+      <Route path="/cookies" element={<CookiesPolicyPage />} />
       <Route path="/dashboard" element={<UserDashboardPage />} />
       <Route path="/dashboard/apostas" element={<UserDashboardPage />} />
       <Route path="/admin" element={<AdminDashboardPage />} />

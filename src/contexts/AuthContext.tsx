@@ -21,28 +21,44 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-const DEMO_ADMIN: UserProfile = {
-  id: "admin-001",
-  matricula: "BS-ADMIN-001",
-  fullName: "Administrador BetShow",
-  cpf: "000.000.000-00",
-  birthDate: "1990-01-01",
-  email: "admin@betshow.com",
-  phone: "(11) 99999-0000",
-  address: { street: "Av. Paulista", number: "1000", city: "São Paulo", state: "SP", zip: "01310-100" },
-  paymentMethod: "pix",
-  role: "admin",
-  balance: 0,
-  bonusBalance: 0,
-  cashbackEarned: 0,
-  createdAt: new Date().toISOString(),
-  kycVerified: true,
-};
+function normalizeUser(raw: any): UserProfile {
+  return {
+    id: String(raw.id),
+    matricula: raw.matricula ?? "",
+    fullName: raw.fullName ?? raw.full_name ?? "",
+    cpf: raw.cpf ?? "",
+    birthDate: raw.birthDate ?? raw.birth_date ?? "",
+    email: raw.email ?? "",
+    phone: raw.phone ?? "",
+    address:
+      typeof raw.address === "object" && raw.address
+        ? raw.address
+        : {
+            street: typeof raw.address === "string" ? raw.address : "",
+            number: "",
+            city: "",
+            state: "",
+            zip: "",
+          },
+    paymentMethod: raw.paymentMethod ?? raw.payment_method ?? "pix",
+    role: raw.role === "admin" ? "admin" : "user",
+    balance: Number(raw.balance ?? 0),
+    bonusBalance: Number(raw.bonusBalance ?? raw.bonus_balance ?? 0),
+    cashbackEarned: Number(raw.cashbackEarned ?? raw.cashback_earned ?? 0),
+    createdAt: raw.createdAt ?? raw.created_at ?? new Date().toISOString(),
+    kycVerified: Boolean(raw.kycVerified ?? raw.kyc_verified),
+  };
+}
 
 function loadStoredAuth(): StoredAuth | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as StoredAuth) : null;
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as StoredAuth;
+    return {
+      token: parsed.token,
+      user: normalizeUser(parsed.user),
+    };
   } catch {
     return null;
   }
@@ -62,28 +78,86 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(
     async (email: string, password: string) => {
-      const result = await apiFetch<{ token: string; user: UserProfile }>("/api/auth/login", {
-        method: "POST",
-        body: { email, password },
-      }, false);
+      const result = await apiFetch<{ token: string; user: UserProfile }>(
+        "/api/auth/login",
+        {
+          method: "POST",
+          body: { email, password },
+        },
+        false
+      );
 
       if (!result.ok || !result.data) {
         return false;
       }
 
-      persistAuth(result.data);
+      persistAuth({
+        token: result.data.token,
+        user: normalizeUser(result.data.user),
+      });
       return true;
     },
     [persistAuth]
   );
 
-  const loginAsAdmin = useCallback(async (email: string, password: string) => {
-    if (email === "admin@betshow.com" && password === "Admin@2026") {
-      persistAuth({ token: "demo-admin-token", user: DEMO_ADMIN });
-      return true;
-    }
-    return false;
-  }, [persistAuth]);
+  const loginAsAdmin = useCallback(
+    async (email: string, password: string) => {
+      const result = await apiFetch<{ token: string; user: UserProfile }>(
+        "/api/auth/login",
+        {
+          method: "POST",
+          body: { email, password },
+        },
+        false
+      );
+
+      if (result.ok && result.data && result.data.user?.role === "admin") {
+        persistAuth({
+          token: result.data.token,
+          user: normalizeUser(result.data.user),
+        });
+        return true;
+      }
+
+      // Fallback local apenas em desenvolvimento, se o seed ainda não rodou
+      if (
+        import.meta.env.DEV &&
+        email === "admin@betshow.com" &&
+        password === "Admin@2026"
+      ) {
+        persistAuth({
+          token: "demo-admin-token",
+          user: normalizeUser({
+            id: "admin-001",
+            matricula: "BS-ADMIN-001",
+            fullName: "Administrador BetShow",
+            cpf: "000.000.000-00",
+            birthDate: "1990-01-01",
+            email: "admin@betshow.com",
+            phone: "(11) 99999-0000",
+            address: {
+              street: "Av. Paulista",
+              number: "1000",
+              city: "São Paulo",
+              state: "SP",
+              zip: "01310-100",
+            },
+            paymentMethod: "pix",
+            role: "admin",
+            balance: 0,
+            bonusBalance: 0,
+            cashbackEarned: 0,
+            createdAt: new Date().toISOString(),
+            kycVerified: true,
+          }),
+        });
+        return true;
+      }
+
+      return false;
+    },
+    [persistAuth]
+  );
 
   const register = useCallback(
     async (form: RegisterFormData) => {
@@ -99,16 +173,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         password: form.password,
       };
 
-      const result = await apiFetch<{ token: string; user: UserProfile }>("/api/auth/register", {
-        method: "POST",
-        body: payload,
-      }, false);
+      const result = await apiFetch<{ token: string; user: UserProfile }>(
+        "/api/auth/register",
+        {
+          method: "POST",
+          body: payload,
+        },
+        false
+      );
 
       if (!result.ok || !result.data) {
         return false;
       }
 
-      persistAuth(result.data);
+      persistAuth({
+        token: result.data.token,
+        user: normalizeUser(result.data.user),
+      });
       return true;
     },
     [persistAuth]

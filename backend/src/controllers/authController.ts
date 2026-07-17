@@ -1,13 +1,34 @@
 import { Request, Response } from "express";
-import { query } from "../db/index.js";
+import { query, withTransaction } from "../db/index.js";
 import { hashPassword, comparePassword } from "../services/passwordService.js";
 import { signToken } from "../services/jwtService.js";
 import { sendWelcomeEmail } from "../services/emailService.js";
 import { sendSms } from "../services/smsService.js";
 import { AuthRequest } from "../middleware/authMiddleware.js";
 
+const WELCOME_BONUS = 500;
+
 function generateMatricula() {
   return `BET-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+}
+
+function mapAuthUser(user: any) {
+  return {
+    id: String(user.id),
+    matricula: user.matricula,
+    fullName: user.full_name,
+    email: user.email,
+    role: user.role,
+    balance: Number(user.balance ?? 0),
+    bonusBalance: Number(user.bonus_balance ?? 0),
+    cashbackEarned: Number(user.cashback_earned ?? 0),
+    kycVerified: Boolean(user.kyc_verified),
+    cpf: user.cpf,
+    birthDate: user.birth_date,
+    phone: user.phone,
+    paymentMethod: user.payment_method,
+    createdAt: user.created_at,
+  };
 }
 
 export async function register(req: Request, res: Response) {
@@ -35,27 +56,39 @@ export async function register(req: Request, res: Response) {
     const passwordHash = await hashPassword(password);
     const matricula = generateMatricula();
 
-    const inserted = await query(
-      `INSERT INTO users
-        (matricula, full_name, cpf, birth_date, email, phone, address, payment_method, role, password_hash, balance, bonus_balance, cashback_earned, kyc_verified, created_at)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,0,0,0,false,NOW())
-        RETURNING id, matricula, full_name, email, role, balance, bonus_balance, cashback_earned, kyc_verified`,
-      [matricula, fullName, cpf, birthDate, email, phone, address, paymentMethod, "user", passwordHash]
-    );
+    const user = await withTransaction(async (client) => {
+      const inserted = await client.query(
+        `INSERT INTO users
+          (matricula, full_name, cpf, birth_date, email, phone, address, payment_method, role, password_hash, balance, bonus_balance, cashback_earned, kyc_verified, created_at)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,0,$11,0,false,NOW())
+         RETURNING id, matricula, full_name, email, role, balance, bonus_balance, cashback_earned, kyc_verified, cpf, birth_date, phone, payment_method, created_at`,
+        [
+          matricula,
+          fullName,
+          cpf,
+          birthDate,
+          email,
+          phone,
+          address,
+          paymentMethod,
+          "user",
+          passwordHash,
+          WELCOME_BONUS,
+        ]
+      );
 
-    const user = inserted[0];
-    const userData = {
-      id: user.id,
-      matricula: user.matricula,
-      fullName: user.full_name,
-      email: user.email,
-      role: user.role,
-      balance: user.balance,
-      bonusBalance: user.bonus_balance,
-      cashbackEarned: user.cashback_earned,
-      kycVerified: user.kyc_verified,
-    };
+      const created = inserted.rows[0];
 
+      await client.query(
+        `INSERT INTO transactions (user_id, type, amount, status, method, description, created_at)
+         VALUES ($1, 'bonus', $2, 'completed', 'welcome', $3, NOW())`,
+        [created.id, WELCOME_BONUS, "Bônus de boas-vindas BETSHOW500"]
+      );
+
+      return created;
+    });
+
+    const userData = mapAuthUser(user);
     const token = signToken({ userId: String(user.id), role: user.role });
 
     await sendWelcomeEmail(user.email, user.full_name);
@@ -76,7 +109,8 @@ export async function login(req: Request, res: Response) {
     }
 
     const results = await query(
-      "SELECT id, matricula, full_name, email, role, password_hash FROM users WHERE email = $1",
+      `SELECT id, matricula, full_name, email, role, password_hash, balance, bonus_balance, cashback_earned, kyc_verified, cpf, birth_date, phone, payment_method, created_at
+       FROM users WHERE email = $1`,
       [email]
     );
 
@@ -93,13 +127,7 @@ export async function login(req: Request, res: Response) {
     const token = signToken({ userId: String(user.id), role: user.role });
     res.json({
       token,
-      user: {
-        id: user.id,
-        matricula: user.matricula,
-        fullName: user.full_name,
-        email: user.email,
-        role: user.role,
-      },
+      user: mapAuthUser(user),
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -116,7 +144,8 @@ export async function profile(req: Request, res: Response) {
     }
 
     const rows = await query(
-      "SELECT id, matricula, full_name, cpf, birth_date, email, phone, address, payment_method, role, balance, bonus_balance, cashback_earned, kyc_verified, created_at FROM users WHERE id = $1",
+      `SELECT id, matricula, full_name, cpf, birth_date, email, phone, address, payment_method, role, balance, bonus_balance, cashback_earned, kyc_verified, created_at
+       FROM users WHERE id = $1`,
       [userId]
     );
 
@@ -127,21 +156,8 @@ export async function profile(req: Request, res: Response) {
     const user = rows[0];
     res.json({
       user: {
-        id: user.id,
-        matricula: user.matricula,
-        fullName: user.full_name,
-        cpf: user.cpf,
-        birthDate: user.birth_date,
-        email: user.email,
-        phone: user.phone,
+        ...mapAuthUser(user),
         address: user.address,
-        paymentMethod: user.payment_method,
-        role: user.role,
-        balance: user.balance,
-        bonusBalance: user.bonus_balance,
-        cashbackEarned: user.cashback_earned,
-        kycVerified: user.kyc_verified,
-        createdAt: user.created_at,
       },
     });
   } catch (error) {

@@ -16,7 +16,9 @@
     "tunnel": "npx --yes cloudflared tunnel --url http://localhost:5173",
     "public": "powershell -ExecutionPolicy Bypass -File ./scripts/start-public.ps1",
     "backend:dev": "cd backend && npm run dev",
-    "backend:build": "cd backend && npm run build"
+    "backend:build": "cd backend && npm run build",
+    "backend:db:migrate": "cd backend && npm run db:migrate",
+    "backend:db:seed": "cd backend && npm run db:seed"
   },
   "dependencies": {
     "react": "^19.0.0",

@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: betshow-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: betshow
+      POSTGRES_USER: betshow_user
+      POSTGRES_PASSWORD: betshow_dev_2026
+    ports:
+      - "5433:5432"
+    volumes:
+      - betshow_pg_data:/var/lib/postgresql/data
+      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U betshow_user -d betshow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  betshow_pg_data:

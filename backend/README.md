@@ -1,54 +1,75 @@
 # BetShow Backend
 
-Esta pasta contém o backend da plataforma BetShow com API REST, autenticação JWT, conexão PostgreSQL, pagamentos com Stripe e notificações por e-mail/SMS.
+API REST com autenticação JWT, PostgreSQL, depósitos, apostas e ledger financeiro.
 
 ## Iniciar o backend
 
-1. Entre na pasta do backend:
-
 ```bash
 cd backend
-```
-
-2. Instale dependências:
-
-```bash
 npm install
-```
-
-3. Copie o modelo de variáveis de ambiente:
-
-```bash
 cp .env.example .env
 ```
 
-4. Inicie em modo de desenvolvimento:
+Configure `DATABASE_URL` no `.env`, depois:
 
 ```bash
+npm run db:migrate
+npm run db:seed
 npm run dev
 ```
 
+Admin padrão (seed):
+
+- E-mail: `admin@betshow.com`
+- Senha: `Admin@2026`
+
 ## Endpoints principais
 
-- `POST /api/auth/register` — Cadastro de usuário
-- `POST /api/auth/login` — Login com e-mail e senha
+### Auth / usuários
+- `POST /api/auth/register` — Cadastro (grava em `users` + bônus de boas-vindas)
+- `POST /api/auth/login` — Login
 - `GET /api/auth/profile` — Perfil autenticado
-- `GET /api/users/me` — Dashboard do usuário autenticado
+- `GET /api/users/me` — Dashboard do usuário (stats reais)
 - `GET /api/users` — Lista de usuários (admin)
-- `POST /api/payments/deposit` — Criar depósito
-- `GET /api/payments/balance` — Saldo do usuário
-- `POST /api/payments/webhook` — Webhook de pagamentos
+
+### Pagamentos / extrato
+- `POST /api/payments/deposit` — Depósito (+ linha em `transactions`)
+- `GET /api/payments/balance` — Saldo
+- `GET /api/payments/transactions` — Extrato do usuário
+- `GET /api/payments/transactions/all` — Extrato geral (admin)
+- `GET /api/payments/summary` — Resumo financeiro (admin)
+- `POST /api/payments/webhook` — Webhook Stripe (stub)
+
+### Apostas
+- `POST /api/bets` — Registrar aposta (debita saldo + `transactions` tipo `bet`)
+- `GET /api/bets/me` — Apostas do usuário
+- `GET /api/bets` — Todas as apostas (admin)
+- `PATCH /api/bets/:id/settle` — Liquidar aposta (`won|lost|cashout|cancelled`)
 
 ## Banco de dados
 
-A pasta `backend/db/schema.sql` contém o esquema inicial de tabelas para `users`, `transactions` e `bets`.
+Schema em `backend/db/schema.sql` (`users`, `transactions`, `bets`).
 
-## Integrações
+Scripts:
+
+- `npm run db:migrate` — aplica o schema
+- `npm run db:seed` — cria/atualiza admin
+
+Com Docker (recomendado em desenvolvimento):
+
+```bash
+# na raiz do projeto
+docker compose up -d
+cd backend
+npm run db:migrate
+npm run db:seed
+npm run dev
+```
+
+O `DATABASE_URL` padrão no `.env` usa `localhost:5433` (container `betshow-db`).
+
+## Integrações opcionais
 
 - Stripe: `STRIPE_SECRET_KEY`
 - E-mail: `EMAIL_HOST`, `EMAIL_USER`, `EMAIL_PASS`
 - SMS: `SMS_ACCOUNT_SID`, `SMS_AUTH_TOKEN`, `SMS_FROM`
-
-## Observações
-
-A API já suporta autenticação JWT e separa o frontend em `FRONTEND_URL` para CORS.
