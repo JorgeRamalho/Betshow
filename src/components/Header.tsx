@@ -94,6 +94,13 @@ export default function Header() {
     setMenuOpen(false);
   }
 
+  const userFirstName =
+    user?.fullName?.trim().split(/\s+/)[0] ||
+    user?.email?.split("@")[0] ||
+    "usuário";
+  const accountLabel = `Olá, ${userFirstName}`;
+  const accountPath = user?.role === "admin" ? "/admin" : "/dashboard";
+
   return (
     <header
       className={[
@@ -124,10 +131,11 @@ export default function Header() {
             (isAuthenticated ? (
               <>
                 <Link
-                  to={user?.role === "admin" ? "/admin" : "/dashboard"}
-                  className="btn btn-outline"
+                  to={accountPath}
+                  className="btn btn-outline header__user-btn"
+                  title={user?.fullName || accountLabel}
                 >
-                  {user?.role === "admin" ? "Admin" : "Dashboard"}
+                  {accountLabel}
                 </Link>
                 <button type="button" className="btn btn-primary" onClick={logout}>
                   Sair
@@ -145,18 +153,29 @@ export default function Header() {
             ))}
 
           {isMobile && (
-            <button
-              type="button"
-              className={`header__burger${menuOpen ? " header__burger--open" : ""}`}
-              aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              <span />
-              <span />
-              <span />
-            </button>
+            <>
+              {isAuthenticated && (
+                <Link
+                  to={accountPath}
+                  className="btn btn-outline header__user-btn header__user-btn--mobile"
+                  title={user?.fullName || accountLabel}
+                >
+                  {accountLabel}
+                </Link>
+              )}
+              <button
+                type="button"
+                className={`header__burger${menuOpen ? " header__burger--open" : ""}`}
+                aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu"
+                onClick={() => setMenuOpen((open) => !open)}
+              >
+                <span />
+                <span />
+                <span />
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -191,25 +210,16 @@ export default function Header() {
 
             <div className="header__mobile-actions">
               {isAuthenticated ? (
-                <>
-                  <Link
-                    to={user?.role === "admin" ? "/admin" : "/dashboard"}
-                    className="btn btn-outline"
-                    onClick={closeMenu}
-                  >
-                    {user?.role === "admin" ? "Admin" : "Dashboard"}
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => {
-                      logout();
-                      closeMenu();
-                    }}
-                  >
-                    Sair
-                  </button>
-                </>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    logout();
+                    closeMenu();
+                  }}
+                >
+                  Sair
+                </button>
               ) : (
                 <>
                   <Link to="/login" className="btn btn-outline" onClick={closeMenu}>

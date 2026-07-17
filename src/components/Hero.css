@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   min-height: 100vh;
-  padding: 7rem 0 4rem;
+  padding: 2.75rem 0 4rem;
   background: var(--gradient-hero);
   overflow: hidden;
 }
@@ -388,7 +388,7 @@
 @media (max-width: 430px) {
   .hero {
     min-height: auto;
-    padding: 4.75rem 0 2rem;
+    padding: 1.5rem 0 2rem;
     overflow-x: clip;
     overflow-y: visible;
   }

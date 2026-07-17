@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import MarketStatusBar from "../components/MarketStatusBar";
 import Hero from "../components/Hero";
 import TrustBar from "../components/TrustBar";
 import PromoCards from "../components/PromoCards";
@@ -17,6 +18,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
+      <MarketStatusBar />
       <main>
         <Hero />
         <MatchCalendar />

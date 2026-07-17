@@ -70,6 +70,21 @@
   white-space: nowrap;
 }
 
+.header__user-btn {
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.header__user-btn--mobile {
+  max-width: min(9.5rem, 42vw);
+  padding: 0.45rem 0.7rem;
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
 .header__burger {
   display: inline-flex;
   width: 42px;
@@ -210,6 +225,16 @@ body.menu-lock {
 @media (max-width: 400px) {
   .header {
     padding: 0.5rem 0;
+  }
+
+  .header__actions {
+    gap: 0.4rem;
+  }
+
+  .header__user-btn--mobile {
+    max-width: min(8.5rem, 40vw);
+    padding: 0.4rem 0.55rem;
+    font-size: 0.72rem;
   }
 
   .header__burger {

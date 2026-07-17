@@ -1,0 +1,218 @@
+.market-status {
+  position: relative;
+  z-index: 120;
+  margin-top: 4.25rem;
+  border-bottom: 1px solid rgba(0, 255, 135, 0.18);
+  background:
+    linear-gradient(90deg, rgba(0, 255, 135, 0.08), rgba(0, 212, 255, 0.05) 40%, rgba(255, 215, 0, 0.06)),
+    rgba(8, 14, 24, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+.market-status__inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 3.35rem;
+}
+
+.market-status__brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+  min-width: 9.75rem;
+  padding: 0.55rem 1rem 0.55rem 1.25rem;
+  background: linear-gradient(90deg, rgba(8, 14, 24, 0.98) 70%, rgba(8, 14, 24, 0));
+}
+
+.market-status__brand strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.market-status__brand small {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.market-status__live {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--neon-green);
+  box-shadow: 0 0 0 0 rgba(0, 255, 135, 0.55);
+  animation: market-pulse 1.8s ease-out infinite;
+}
+
+.market-status__viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 2%, #000 96%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 2%, #000 96%, transparent);
+}
+
+.market-status__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 0;
+  padding-block: 0.55rem;
+  will-change: transform;
+  animation: market-status-scroll 38s linear infinite;
+}
+
+.market-status__track:hover {
+  animation-play-state: paused;
+}
+
+.market-status__slot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.market-status__sep {
+  margin: 0 0.85rem;
+  color: rgba(0, 255, 135, 0.35);
+  font-size: 0.85rem;
+}
+
+.market-status__item {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  column-gap: 0.55rem;
+  row-gap: 0.1rem;
+  align-items: baseline;
+  flex: 0 0 auto;
+  min-width: 8.5rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  background: rgba(5, 10, 18, 0.55);
+}
+
+.market-status__label {
+  grid-column: 1 / -1;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.market-status__value {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.market-status__change {
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.market-status__change--up {
+  color: var(--neon-green);
+}
+
+.market-status__change--down {
+  color: #ff6b8a;
+}
+
+.market-status__change--flat {
+  color: var(--text-secondary);
+}
+
+@keyframes market-status-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    /* 3 grupos iguais → desloca 1/3 do track */
+    transform: translate3d(-33.333%, 0, 0);
+  }
+}
+
+@keyframes market-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 135, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(0, 255, 135, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 135, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-status__track {
+    animation: none;
+  }
+
+  .market-status__viewport {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .market-status {
+    margin-top: 3.6rem;
+  }
+
+  .market-status__brand {
+    min-width: 8.5rem;
+    padding-left: 0.85rem;
+  }
+
+  .market-status__track {
+    animation-duration: 28s;
+  }
+}
+
+@media (max-width: 430px) {
+  .market-status {
+    margin-top: 3.35rem;
+  }
+
+  .market-status__brand {
+    min-width: 7.25rem;
+    padding-left: 0.7rem;
+    padding-right: 0.5rem;
+  }
+
+  .market-status__brand strong {
+    font-size: 0.82rem;
+  }
+
+  .market-status__item {
+    min-width: 7.8rem;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .market-status__value {
+    font-size: 0.95rem;
+  }
+
+  .market-status__track {
+    animation-duration: 24s;
+  }
+}

@@ -1,5 +1,23 @@
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000";
 const STORAGE_KEY = "betshow_auth";
+
+/**
+ * - localhost / 127.0.0.1 → API direta na porta 4000
+ * - túnel Cloudflare → mesma origem (Vite faz proxy /api → 4000)
+ * - produção (Netlify/Pages) → VITE_API_URL
+ */
+function resolveApiUrl(): string {
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    const isLocal = host === "localhost" || host === "127.0.0.1" || host === "[::1]";
+    if (isLocal) return "http://localhost:4000";
+    if (host.endsWith("trycloudflare.com") || host.endsWith("ngrok-free.app") || host.endsWith("ngrok.io")) {
+      return "";
+    }
+  }
+  return import.meta.env.VITE_API_URL || "http://localhost:4000";
+}
+
+const API_URL = resolveApiUrl();
 
 export type ApiResult<T> = {
   ok: boolean;
@@ -46,26 +64,36 @@ export async function apiFetch<T>(
     }
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
+  try {
+    const response = await fetch(`${API_URL}${path}`, {
+      ...options,
+      headers,
+      body: options.body ? JSON.stringify(options.body) : undefined,
+    });
 
-  const contentType = response.headers.get("content-type");
-  const body = contentType?.includes("application/json") ? await response.json().catch(() => null) : null;
+    const contentType = response.headers.get("content-type");
+    const body = contentType?.includes("application/json")
+      ? await response.json().catch(() => null)
+      : null;
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return {
+        ok: false,
+        status: response.status,
+        error: body?.error ?? response.statusText,
+      };
+    }
+
+    return {
+      ok: true,
+      status: response.status,
+      data: body as T,
+    };
+  } catch {
     return {
       ok: false,
-      status: response.status,
-      error: body?.error ?? response.statusText,
+      status: 0,
+      error: `Não foi possível conectar à API (${API_URL}). Confirme se o backend está em http://localhost:4000.`,
     };
   }
-
-  return {
-    ok: true,
-    status: response.status,
-    data: body as T,
-  };
 }
