@@ -101,8 +101,32 @@
   margin-top: 0;
 }
 
+.register__age-alert {
+  margin-bottom: 0.25rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 183, 0, 0.45);
+  background: rgba(255, 183, 0, 0.1);
+  color: var(--gold-soft);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.register__age-alert strong {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.register__hint {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
 .register__form input[type="text"],
-.register__form input[type="email"] {
+.register__form input[type="email"],
+.register__form input[type="date"] {
   width: 100%;
   padding: 0.85rem 1rem;
   font-family: var(--font-body);
@@ -112,6 +136,11 @@
   border-radius: var(--radius-md);
   color: var(--text-primary);
   transition: border-color var(--transition);
+}
+
+.register__form input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.85);
+  cursor: pointer;
 }
 
 .register__form input:focus {

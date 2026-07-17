@@ -48,6 +48,23 @@ ul {
   margin-inline: auto;
 }
 
+@media (max-width: 430px) {
+  .container {
+    width: 100%;
+    padding-inline: 1rem;
+    box-sizing: border-box;
+  }
+
+  .section-title {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+    word-break: break-word;
+  }
+
+  .section-sub {
+    font-size: 0.95rem;
+  }
+}
+
 .section-title {
   font-family: var(--font-headline);
   font-size: clamp(2rem, 5vw, 3.25rem);

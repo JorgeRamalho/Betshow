@@ -8,7 +8,10 @@ import SportsArena from "../components/SportsArena";
 import FamilyClub from "../components/FamilyClub";
 import RegisterCPF from "../components/RegisterCPF";
 import LiveOdds from "../components/LiveOdds";
+import SportsTicker from "../components/SportsTicker";
+import MatchCalendar from "../components/MatchCalendar";
 import Footer from "../components/Footer";
+import BackToTop from "../components/BackToTop";
 
 export default function HomePage() {
   return (
@@ -16,9 +19,11 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
+        <MatchCalendar />
         <Copa2026Banner />
         <TrustBar />
         <PromoCards />
+        <SportsTicker />
         <LiveOdds />
         <CommunityAffinity />
         <SportsArena />
@@ -26,6 +31,7 @@ export default function HomePage() {
         <RegisterCPF />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }

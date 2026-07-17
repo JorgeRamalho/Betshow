@@ -20,18 +20,33 @@ export default function PaymentPage() {
     setStatus("loading");
     setMessage("");
 
-    const result = await apiFetch<{ status: string; amount: number; reference?: string }>("/api/payments/deposit", {
+    const result = await apiFetch<{
+      status: string;
+      amount: number;
+      reference?: string;
+      balance?: number;
+      bonusBalance?: number;
+    }>("/api/payments/deposit", {
       method: "POST",
       body: { amount: Number(amount), method: user.paymentMethod },
     });
 
-    if (!result.ok) {
+    if (!result.ok || !result.data) {
       setStatus("error");
       setMessage(result.error ?? "Falha ao processar o depósito.");
       return;
     }
 
-    updateUser({ balance: user.balance + Number(amount) });
+    updateUser({
+      balance:
+        typeof result.data.balance === "number"
+          ? result.data.balance
+          : user.balance + Number(amount),
+      bonusBalance:
+        typeof result.data.bonusBalance === "number"
+          ? result.data.bonusBalance
+          : user.bonusBalance,
+    });
     setStatus("success");
     setMessage("Depósito realizado com sucesso. Redirecionando ao dashboard...");
     setTimeout(() => navigate("/dashboard"), 2000);

@@ -12,6 +12,7 @@ import {
   isValidCPF,
   isValidEmail,
   isValidPassword,
+  isAdult,
   generateMatricula,
 } from "../../utils/validators";
 import "../../styles/forms.css";
@@ -41,6 +42,9 @@ export default function RegisterPage() {
       if (!form.fullName.trim()) e.fullName = "Nome obrigatório";
       if (!isValidCPF(form.cpf)) e.cpf = "CPF inválido";
       if (!form.birthDate) e.birthDate = "Data de nascimento obrigatória";
+      else if (!isAdult(form.birthDate)) {
+        e.birthDate = "Cadastro permitido apenas para maiores de 18 anos";
+      }
     }
     if (step === 1) {
       if (!isValidEmail(form.email)) e.email = "E-mail inválido";
@@ -115,6 +119,10 @@ export default function RegisterPage() {
               <input id="fullName" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} aria-invalid={!!errors.fullName} />
               {errors.fullName && <p className="form-field__error">{errors.fullName}</p>}
             </div>
+            <div className="form-alert" role="note">
+              <strong>Atenção:</strong> o cadastro é exclusivo para pessoas maiores de idade
+              (18 anos ou mais), conforme a legislação brasileira.
+            </div>
             <div className="form-row">
               <div className="form-field">
                 <label htmlFor="cpf">CPF</label>
@@ -123,7 +131,18 @@ export default function RegisterPage() {
               </div>
               <div className="form-field">
                 <label htmlFor="birthDate">Data de nascimento</label>
-                <input id="birthDate" type="date" value={form.birthDate} onChange={(e) => update("birthDate", e.target.value)} aria-invalid={!!errors.birthDate} />
+                <input
+                  id="birthDate"
+                  type="date"
+                  value={form.birthDate}
+                  max={new Date().toISOString().slice(0, 10)}
+                  onChange={(e) => update("birthDate", e.target.value)}
+                  aria-invalid={!!errors.birthDate}
+                  aria-describedby="birthDate-hint"
+                />
+                <p id="birthDate-hint" className="form-field__hint">
+                  É necessário ter 18 anos ou mais para criar uma conta.
+                </p>
                 {errors.birthDate && <p className="form-field__error">{errors.birthDate}</p>}
               </div>
             </div>

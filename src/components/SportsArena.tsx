@@ -3,14 +3,14 @@ import "./SportsArena.css";
 const SPORTS = [
   {
     name: "Futebol",
-    img: "https://images.unsplash.com/photo-1593341646782-e0b495cff961?w=500&q=80&fit=crop&crop=faces",
+    img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=700&q=80&fit=crop",
     events: "1.200+ jogos/mês",
     accent: "green",
     closeup: true,
   },
   {
     name: "Basquete",
-    img: "https://images.unsplash.com/photo-1627627250823-849683127338?w=500&q=80&fit=crop&crop=faces",
+    img: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=700&q=80&fit=crop",
     events: "NBA · NBB · Euro",
     accent: "gold",
     closeup: true,

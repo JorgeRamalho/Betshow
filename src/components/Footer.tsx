@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 export default function Footer() {
@@ -23,7 +24,8 @@ export default function Footer() {
           <div>
             <h4>Legal</h4>
             <a href="#">Termos de uso</a>
-            <a href="#">Política de privacidade</a>
+            <Link to="/privacidade">Política de privacidade</Link>
+            <Link to="/cookies">Política de cookies</Link>
             <a href="#">Jogo responsável</a>
             <a href="#">Impostos e tributação GOV</a>
           </div>
