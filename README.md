@@ -1,8 +1,12 @@
-📌 ## Betshow - Paixão pelo jogo quee vira vitória 
+📌 ## Betshow - Paixão pelo jogo que vira vitória
 
-🌐 ## Website Link do projeto online: https://betshow.netlify.app/
+🌐 ## Sites online
+- **Netlify:** https://betshow.netlify.app/
+- **GitHub Pages:** https://jorgeramalho.github.io/Betshow/ (B maiúsculo)
 
-📂 ## Repositório: https://github.com//JorgeRamalho/Betshow
+> Deploy Netlify: conta precisa ter créditos disponíveis. Se novos deploys falharem com *Account credit usage exceeded*, use o GitHub Pages ou adicione créditos no painel Netlify. O Pages publica automaticamente a cada push na `main` via Actions.
+
+📂 ## Repositório: https://github.com/JorgeRamalho/Betshow
 
 💻 ## Tecnologias
 
