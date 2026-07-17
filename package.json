@@ -18,7 +18,11 @@
     "backend:dev": "cd backend && npm run dev",
     "backend:build": "cd backend && npm run build",
     "backend:db:migrate": "cd backend && npm run db:migrate",
-    "backend:db:seed": "cd backend && npm run db:seed"
+    "backend:db:seed": "cd backend && npm run db:seed",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:db": "docker compose up -d db",
+    "docker:logs": "docker compose logs -f api db"
   },
   "dependencies": {
     "react": "^19.0.0",

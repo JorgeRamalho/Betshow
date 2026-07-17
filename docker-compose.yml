@@ -17,6 +17,43 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - betshow
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: betshow-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgresql://betshow_user:betshow_dev_2026@db:5432/betshow
+      JWT_SECRET: super-secret-change-me
+      JWT_EXPIRES_IN: 1d
+      FRONTEND_URL: http://localhost:5173
+      FRONTEND_URLS: http://localhost:5173,http://127.0.0.1:5173,https://betshow.netlify.app,https://jorgeramalho.github.io
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -qO- http://127.0.0.1:4000/api/health >/dev/null 2>&1 || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - betshow
+
+networks:
+  betshow:
+    driver: bridge
 
 volumes:
   betshow_pg_data:
