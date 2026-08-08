@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { COOKIE_CONSENT_KEY, COOKIE_PREFS_KEY, type CookiePrefs } from "../utils/theme";
 import "./CookieConsent.css";
 
-const CONSENT_KEY = "betshow_cookie_consent";
-
 type ConsentValue = "accepted" | "essential" | "custom";
-
-type CookiePrefs = {
-  performance: boolean;
-  marketing: boolean;
-};
 
 const DEFAULT_PREFS: CookiePrefs = {
   performance: false,
   marketing: false,
 };
+
+function notifyConsent(prefs: CookiePrefs) {
+  window.dispatchEvent(new CustomEvent("betshow:consent", { detail: prefs }));
+}
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
@@ -23,7 +21,7 @@ export default function CookieConsent() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(CONSENT_KEY);
+      const saved = localStorage.getItem(COOKIE_CONSENT_KEY);
       if (!saved) setVisible(true);
     } catch {
       setVisible(true);
@@ -31,16 +29,16 @@ export default function CookieConsent() {
   }, []);
 
   function saveConsent(value: ConsentValue, nextPrefs?: CookiePrefs) {
+    const prefs = nextPrefs ?? DEFAULT_PREFS;
     try {
-      localStorage.setItem(CONSENT_KEY, value);
-      if (nextPrefs) {
-        localStorage.setItem("betshow_cookie_prefs", JSON.stringify(nextPrefs));
-      }
+      localStorage.setItem(COOKIE_CONSENT_KEY, value);
+      localStorage.setItem(COOKIE_PREFS_KEY, JSON.stringify(prefs));
     } catch {
       /* ignore storage errors */
     }
     setVisible(false);
     setShowSettings(false);
+    notifyConsent(prefs);
   }
 
   function saveSettings() {

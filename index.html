@@ -4,13 +4,28 @@
     → src/main.tsx (TypeScript + React)
     → src/App.tsx (componentes React)
     → src/styles/global.css + *.css (estilos)
-  Dev (Vite): npm run dev  |  Live Server: botão direito neste index.html → Open with Live Server
-  Antes do Live Server rode: npm run live
+  Dev (Vite): npm run dev  |  Live Server: npm run live:server
 -->
-  
-<!DOCTYPE html>  
+
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>    <meta charset="UTF-8" />
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem("betshow_theme") || "dark";
+          var theme =
+            mode === "system"
+              ? window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark"
+              : mode;
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
     <script id="live-server-redirect">
       (function () {
         if (location.protocol === "file:") {
@@ -19,9 +34,9 @@
               '<div style="font-family:sans-serif;max-width:520px;margin:3rem auto;padding:1.5rem;line-height:1.6">' +
               "<h1>BetShow</h1><p>Abra com um servidor local — não use duplo clique no arquivo.</p>" +
               "<p><strong>Live Server:</strong> rode <code>npm run live:server</code> e acesse " +
-              "<a href=\"http://127.0.0.1:5500/\">http://127.0.0.1:5500/</a></p>" +
+              '<a href="http://127.0.0.1:5500/">http://127.0.0.1:5500/</a></p>' +
               "<p><strong>Desenvolvimento:</strong> <code>npm run dev</code> → " +
-              "<a href=\"http://localhost:5173/\">http://localhost:5173/</a></p></div>";
+              '<a href="http://localhost:5173/">http://localhost:5173/</a></p></div>';
           });
           return;
         }
@@ -40,17 +55,34 @@
       })();
     </script>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./assets/og-cover.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="BetShow — apostas esportivas seguras, bônus exclusivos, cashback e cadastro com CPF verificado. Plataforma 100% regulada."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#050810" />
+    <link rel="canonical" href="https://betshow.netlify.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="BetShow" />
+    <meta property="og:title" content="BetShow — Apostas Esportivas Premium" />
+    <meta
+      property="og:description"
+      content="BetShow — apostas esportivas seguras, bônus exclusivos, cashback e cadastro com CPF verificado. Plataforma 100% regulada."
     />
+    <meta property="og:url" content="https://betshow.netlify.app/" />
+    <meta property="og:image" content="https://betshow.netlify.app/assets/og-cover.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BetShow — Apostas Esportivas Premium" />
+    <meta
+      name="twitter:description"
+      content="BetShow — apostas esportivas seguras, bônus exclusivos, cashback e cadastro com CPF verificado."
+    />
+    <meta name="twitter:image" content="https://betshow.netlify.app/assets/og-cover.png" />
     <title>BetShow — Apostas Esportivas Premium</title>
   </head>
   <body>

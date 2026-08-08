@@ -1,23 +1,19 @@
 import { Link } from "react-router-dom";
 import Logo from "../../components/brand/Logo";
+import LegalNav from "../../components/legal/LegalNav";
+import PageMeta from "../../components/PageMeta";
 import { BRAND } from "../../data/brand";
 import "../../styles/legal.css";
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="legal-page">
+    <div className="legal-page" id="main">
+      <PageMeta
+        title="Política de Privacidade"
+        description="Política de privacidade da BetShow — coleta, uso e proteção de dados pessoais conforme LGPD e Lei 14.790/2023."
+      />
       <article className="legal-page__card">
-        <div className="legal-page__nav">
-          <Link to="/" className="legal-page__back">
-            ← Voltar ao início
-          </Link>
-          <div className="legal-page__links">
-            <Link to="/privacidade" aria-current="page">
-              Privacidade
-            </Link>
-            <Link to="/cookies">Cookies</Link>
-          </div>
-        </div>
+        <LegalNav current="privacidade" />
 
         <Logo size="md" />
         <h1>Política de Privacidade</h1>

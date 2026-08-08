@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import PageMeta from "../../components/PageMeta";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   fetchAllBets,
@@ -92,7 +93,9 @@ export default function AdminDashboardPage() {
   if (!user || user.role !== "admin") return <Navigate to="/login" replace />;
 
   return (
-    <DashboardLayout variant="admin" links={ADMIN_LINKS}>
+    <>
+      <PageMeta title="Painel Admin" description="Painel administrativo BetShow — finanças, apostas e gestão de usuários." />
+      <DashboardLayout variant="admin" links={ADMIN_LINKS}>
       <header className="dashboard-header">
         <div>
           <h1>Painel Administrativo</h1>
@@ -303,5 +306,6 @@ export default function AdminDashboardPage() {
         </>
       )}
     </DashboardLayout>
+    </>
   );
 }

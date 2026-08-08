@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/brand/Logo";
+import PageMeta from "../../components/PageMeta";
 import { useAuth } from "../../contexts/AuthContext";
 import { BRAND } from "../../data/brand";
 import { formatCurrency } from "../../utils/formatters";
@@ -54,7 +55,8 @@ export default function PaymentPage() {
 
   if (!user) {
     return (
-      <div className="form-page">
+      <div className="form-page" id="main">
+        <PageMeta title="Depósito" description="Ative sua conta BetShow com o primeiro depósito e receba bônus de boas-vindas." />
         <div className="form-card">
           <p>Faça o cadastro primeiro.</p>
           <Link to="/cadastro" className="btn btn-primary">Cadastrar</Link>
@@ -64,7 +66,8 @@ export default function PaymentPage() {
   }
 
   return (
-    <div className="form-page">
+    <div className="form-page" id="main">
+      <PageMeta title="Depósito" description="Ative sua conta BetShow com o primeiro depósito e receba bônus de boas-vindas." />
       <div className="form-card form-card--wide">
         <div className="form-card__head">
           <Logo size="lg" />

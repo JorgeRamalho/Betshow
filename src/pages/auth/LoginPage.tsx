@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/brand/Logo";
+import PageMeta from "../../components/PageMeta";
 import { useAuth } from "../../contexts/AuthContext";
 import { BRAND } from "../../data/brand";
 import "../../styles/forms.css";
@@ -34,7 +35,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="form-page">
+    <div className="form-page" id="main">
+      <PageMeta title="Login" description="Acesse sua conta BetShow — apostas esportivas, bônus e dashboard." />
       <form className="form-card" onSubmit={handleSubmit}>
         <div className="form-card__head">
           <Logo size="lg" />

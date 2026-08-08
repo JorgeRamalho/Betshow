@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { Navigate, Link } from "react-router-dom";
 import Logo from "../components/brand/Logo";
-import { useAuth } from "../contexts/AuthContext";
-import "../styles/dashboard.css";
+import ThemeToggle from "../components/ThemeToggle";
+import { useAuth } from "../contexts/AuthContext";import "../styles/dashboard.css";
 
 type DashboardLayoutProps = {
   children: ReactNode;
@@ -25,6 +25,9 @@ export default function DashboardLayout({ children, variant, links }: DashboardL
         <Link to="/" className="btn btn-outline dashboard-sidebar__home">
           ← Voltar à home
         </Link>
+        <div className="dashboard-sidebar__theme">
+          <ThemeToggle />
+        </div>
         <nav className="dashboard-sidebar__nav" aria-label={variant === "admin" ? "Admin" : "Usuário"}>
           {links.map((l) => (
             <Link
@@ -45,7 +48,7 @@ export default function DashboardLayout({ children, variant, links }: DashboardL
           <span>🚪</span> Sair
         </button>
       </aside>
-      <main className="dashboard-main">{children}</main>
+      <main id="main" tabIndex={-1} className="dashboard-main">{children}</main>
     </div>
   );
 }

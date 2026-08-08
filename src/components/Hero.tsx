@@ -140,7 +140,11 @@ export default function Hero() {
                   }`}
                   aria-hidden={index !== activeSlide}
                 >
-                  <img src={sport.src} alt="" />
+                  <img
+                    src={sport.src}
+                    alt={`Apostas em ${sport.label} na BetShow`}
+                    loading={index === activeSlide ? "eager" : "lazy"}
+                  />
                   <figcaption className="hero__carousel-label">{sport.label}</figcaption>
                 </figure>
               ))}

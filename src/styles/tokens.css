@@ -92,4 +92,43 @@
   /* ── Layout dashboard ── */
   --sidebar-width: 260px;
   --header-height: 64px;
+
+  /* ── Header (variáveis para tema claro/escuro) ── */
+  --header-surface: rgba(5, 8, 16, 0.35);
+  --header-surface-scrolled: #0a1f14;
+  --header-border: transparent;
+  --header-shadow: none;
+}
+
+/* ── Tema claro ── */
+[data-theme="light"] {
+  --bg-deep: #eef2f9;
+  --bg-primary: #ffffff;
+  --bg-elevated: #f5f8fc;
+  --bg-card: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.88);
+  --bg-input: #f0f4fa;
+
+  --neon-green: #00b35f;
+  --neon-green-dim: #009652;
+  --gold: #c99700;
+  --gold-soft: #b38600;
+  --cyan: #0099c4;
+  --magenta: #d4005c;
+
+  --text-primary: #0a0e17;
+  --text-secondary: #4a5568;
+  --text-muted: #6b7a9e;
+  --text-caption: #8b95a8;
+
+  --gradient-hero: linear-gradient(135deg, #eef2f9 0%, #e8f5ee 40%, #f8fbff 100%);
+  --gradient-card: linear-gradient(180deg, rgba(0, 179, 95, 0.05) 0%, transparent 100%);
+  --shadow-glow-green: 0 0 30px rgba(0, 179, 95, 0.2);
+  --shadow-glow-gold: 0 0 24px rgba(201, 151, 0, 0.18);
+  --shadow-card: 0 8px 28px rgba(10, 14, 23, 0.08);
+
+  --header-surface: rgba(255, 255, 255, 0.82);
+  --header-surface-scrolled: #ffffff;
+  --header-border: rgba(10, 14, 23, 0.08);
+  --header-shadow: 0 8px 24px rgba(10, 14, 23, 0.08);
 }

@@ -13,13 +13,15 @@ import SportsTicker from "../components/SportsTicker";
 import MatchCalendar from "../components/MatchCalendar";
 import Footer from "../components/Footer";
 import BackToTop from "../components/BackToTop";
+import PageMeta from "../components/PageMeta";
 
 export default function HomePage() {
   return (
     <>
+      <PageMeta title="Início" />
       <Header />
       <MarketStatusBar />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
         <MatchCalendar />
         <Copa2026Banner />

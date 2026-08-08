@@ -20,12 +20,8 @@ export default function Avatar({
   className = "",
 }: AvatarProps) {
   return (
-    <span
-      className={`avatar avatar--${size} avatar--ring-${ring} ${className}`.trim()}
-      role="img"
-      aria-label={alt}
-    >
-      <img src={src} alt="" />
+    <span className={`avatar avatar--${size} avatar--ring-${ring} ${className}`.trim()}>
+      <img src={src} alt={alt} />
     </span>
   );
 }

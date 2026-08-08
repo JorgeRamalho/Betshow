@@ -23,10 +23,10 @@ export default function Footer() {
           </div>
           <div>
             <h4>Legal</h4>
-            <a href="#">Termos de uso</a>
+            <Link to="/termos">Termos de uso</Link>
             <Link to="/privacidade">Política de privacidade</Link>
             <Link to="/cookies">Política de cookies</Link>
-            <a href="#">Jogo responsável</a>
+            <Link to="/jogo-responsavel">Jogo responsável</Link>
             <a href="#">Impostos e tributação GOV</a>
           </div>
           <div>

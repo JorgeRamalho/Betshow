@@ -26,11 +26,12 @@ npm run dev
 | Arquivo | Para Quem | Tempo |
 |---------|-----------|-------|
 | **Este arquivo** | Todos | 2 min |
-| **GUIA-DESENVOLVIMENTO.md** | Desenvolvedores | 5 min |
-| **DOCUMENTACAO-COMPLETA.md** | Gerentes/Stakeholders | 30 min |
-| **SUMARIO-EXECUTIVO.md** | Decisores/C-Level | 15 min |
-| **ESTRUTURA-ARQUIVOS.md** | Arquitetos/Leads | 20 min |
-| **VERIFICACAO-FINAL.md** | QA/Testes | 10 min |
+| **[GUIA-DESENVOLVIMENTO.md](../02-desenvolvimento/GUIA-DESENVOLVIMENTO.md)** | Desenvolvedores | 5 min |
+| **[DOCUMENTACAO-COMPLETA.md](../04-produto/DOCUMENTACAO-COMPLETA.md)** | Gerentes/Stakeholders | 30 min |
+| **[SUMARIO-EXECUTIVO.md](../04-produto/SUMARIO-EXECUTIVO.md)** | Decisores/C-Level | 15 min |
+| **[ESTRUTURA-ARQUIVOS.md](../03-arquitetura/ESTRUTURA-ARQUIVOS.md)** | Arquitetos/Leads | 20 min |
+| **[VERIFICACAO-FINAL.md](../05-qualidade/VERIFICACAO-FINAL.md)** | QA/Testes | 10 min |
+| **[AUDITORIA-COMPLETA](../06-auditoria/AUDITORIA-COMPLETA-2026-08-07.md)** | Auditoria técnica | 25 min |
 
 ---
 
@@ -229,18 +230,18 @@ R: 5173 (Vite). Use `npm run dev -- --port 3000` para mudar
 ## 📞 Suporte
 
 **Dúvidas sobre código?**
-1. Leia `GUIA-DESENVOLVIMENTO.md`
+1. Leia [GUIA-DESENVOLVIMENTO.md](../02-desenvolvimento/GUIA-DESENVOLVIMENTO.md)
 2. Explore os comentários no código
 3. Veja exemplos em `pages/`
 
 **Dúvidas sobre arquitetura?**
-1. Leia `ESTRUTURA-ARQUIVOS.md`
+1. Leia [ESTRUTURA-ARQUIVOS.md](../03-arquitetura/ESTRUTURA-ARQUIVOS.md)
 2. Veja `src/App.tsx` e `src/routes/AppRouter.tsx`
 3. Explore `src/contexts/AuthContext.tsx`
 
 **Dúvidas sobre recursos?**
-1. Leia `DOCUMENTACAO-COMPLETA.md`
-2. Veja `SUMARIO-EXECUTIVO.md`
+1. Leia [DOCUMENTACAO-COMPLETA.md](../04-produto/DOCUMENTACAO-COMPLETA.md)
+2. Veja [SUMARIO-EXECUTIVO.md](../04-produto/SUMARIO-EXECUTIVO.md)
 3. Teste a aplicação em `http://localhost:5173`
 
 ---

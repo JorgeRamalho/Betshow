@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import PageMeta from "../../components/PageMeta";
 import { useAuth } from "../../contexts/AuthContext";
 import { BRAND } from "../../data/brand";
 import { fetchMyBets, fetchMyTransactions, fetchUserDashboard } from "../../services/betting";
@@ -85,7 +86,9 @@ export default function UserDashboardPage() {
     stats.totalStaked > 0 ? (stats.profitLoss / stats.totalStaked) * 100 : 0;
 
   return (
-    <DashboardLayout variant="user" links={USER_LINKS}>
+    <>
+      <PageMeta title="Minha Conta" description="Dashboard BetShow — saldo, apostas, estatísticas e histórico." />
+      <DashboardLayout variant="user" links={USER_LINKS}>
       <div className="copa-banner">
         <div>
           <h2>🏆 {BRAND.copa2026.title}</h2>
@@ -273,5 +276,6 @@ export default function UserDashboardPage() {
         </>
       )}
     </DashboardLayout>
+    </>
   );
 }

@@ -23,8 +23,13 @@
   justify-content: center;
   width: 100%;
   margin-top: var(--space-md);
+  margin-bottom: 0.25rem;
   padding: 0.55rem 0.85rem;
   font-size: 0.82rem;
+}
+
+.dashboard-sidebar__theme {
+  margin-bottom: 1rem;
 }
 
 .dashboard-sidebar__nav {

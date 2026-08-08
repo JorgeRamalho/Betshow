@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./brand/Logo";
+import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "../contexts/AuthContext";
 import "./Header.css";
 
@@ -126,7 +127,7 @@ export default function Header() {
         )}
 
         <div className="header__actions">
-          {/* No mobile NÃO renderiza Entrar/Cadastrar na barra — evita corte em 375px */}
+          <ThemeToggle compact />
           {!isMobile &&
             (isAuthenticated ? (
               <>

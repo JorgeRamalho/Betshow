@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 import os from "node:os";
 
 const PORT = Number(process.env.PORT) || 5173;
@@ -72,7 +73,60 @@ function remoteAccessBanner(mode: "dev" | "preview"): Plugin {
 
 export default defineConfig({
   base: "./",
-  plugins: [react(), stripLiveServerRedirect(), remoteAccessBanner("dev")],
+  plugins: [
+    react(),
+    stripLiveServerRedirect(),
+    remoteAccessBanner("dev"),
+    VitePWA({
+      registerType: "autoUpdate",
+      injectRegister: "auto",
+      includeAssets: ["favicon.svg", "assets/logo-betshow.svg", "assets/og-cover.png"],
+      manifest: {
+        name: "BetShow — Apostas Esportivas Premium",
+        short_name: "BetShow",
+        description:
+          "Apostas esportivas seguras, bônus exclusivos, cashback e cadastro com CPF verificado.",
+        theme_color: "#050810",
+        background_color: "#050810",
+        display: "standalone",
+        start_url: "./",
+        scope: "./",
+        lang: "pt-BR",
+        orientation: "portrait-primary",
+        categories: ["sports", "entertainment"],
+        icons: [
+          {
+            src: "assets/og-cover.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable",
+          },
+          {
+            src: "assets/logo-betshow.svg",
+            sizes: "any",
+            type: "image/svg+xml",
+            purpose: "any",
+          },
+        ],
+      },
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,woff}"],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "unsplash-images",
+              expiration: {
+                maxEntries: 48,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+        ],
+      },
+    }),
+  ],
   server: {
     host: "0.0.0.0",
     port: PORT,

@@ -119,9 +119,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return true;
       }
 
-      // Fallback local apenas em desenvolvimento, se o seed ainda não rodou
+      // Fallback local em dev ou build E2E (sem backend), se o seed ainda não rodou
+      const allowDemoAuth =
+        import.meta.env.DEV || import.meta.env.VITE_DEMO_AUTH === "true";
+
       if (
-        import.meta.env.DEV &&
+        allowDemoAuth &&
         email === "admin@betshow.com" &&
         password === "Admin@2026"
       ) {

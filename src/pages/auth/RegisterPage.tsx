@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/brand/Logo";
+import PageMeta from "../../components/PageMeta";
 import { useAuth } from "../../contexts/AuthContext";
 import { BRAND } from "../../data/brand";
 import type { RegisterFormData } from "../../types/user";
@@ -88,7 +89,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="form-page">
+    <div className="form-page" id="main">
+      <PageMeta
+        title="Cadastro"
+        description="Crie sua conta BetShow em 5 passos — CPF verificado, bônus de boas-vindas e cadastro seguro."
+      />
       <div className="form-card form-card--wide">
         <div className="form-card__head">
           <Logo size="lg" />

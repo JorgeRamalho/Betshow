@@ -1,23 +1,19 @@
 import { Link } from "react-router-dom";
 import Logo from "../../components/brand/Logo";
+import LegalNav from "../../components/legal/LegalNav";
+import PageMeta from "../../components/PageMeta";
 import { BRAND } from "../../data/brand";
 import "../../styles/legal.css";
 
 export default function CookiesPolicyPage() {
   return (
-    <div className="legal-page">
+    <div className="legal-page" id="main">
+      <PageMeta
+        title="Política de Cookies"
+        description="Política de cookies da BetShow — tipos de cookies, finalidades e como gerenciar suas preferências."
+      />
       <article className="legal-page__card">
-        <div className="legal-page__nav">
-          <Link to="/" className="legal-page__back">
-            ← Voltar ao início
-          </Link>
-          <div className="legal-page__links">
-            <Link to="/privacidade">Privacidade</Link>
-            <Link to="/cookies" aria-current="page">
-              Cookies
-            </Link>
-          </div>
-        </div>
+        <LegalNav current="cookies" />
 
         <Logo size="md" />
         <h1>Política de Cookies</h1>

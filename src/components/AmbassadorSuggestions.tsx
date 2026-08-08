@@ -9,7 +9,11 @@ function SuggestionCard({ item }: { item: AmbassadorSuggestion }) {
   return (
     <article className="suggest-card">
       <div className="suggest-card__visual">
-        <img src={item.backgroundImage} alt="" loading="lazy" />
+        <img
+          src={item.backgroundImage}
+          alt={`${item.name} — sugestão de embaixador ${item.profile}`}
+          loading="lazy"
+        />
         <div className="suggest-card__fade" aria-hidden />
         <span className={`suggest-card__tier suggest-card__tier--${item.tier.toLowerCase()}`}>
           Tier {item.tier}
